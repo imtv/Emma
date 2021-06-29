@@ -21,7 +21,7 @@ source /etc/os-release
 RELEASE=$ID
 VERSION=$VERSION_ID
 cat >> /usr/src/atrandys.log <<-EOF
-== Script: atrandys/xray/install.sh
+== Script: imtv/xray/install.sh
 == Time  : $(date +"%Y-%m-%d %H:%M:%S")
 == OS    : $RELEASE $VERSION
 == Kernel: $(uname -r)
