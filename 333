@@ -231,7 +231,6 @@ server {
 
     location /$your_domain {
                 client_max_body_size 0;
-#               keepalive_time 1071906480m;
                 keepalive_requests 4294967296;
                 client_body_timeout 1071906480m;
                 send_timeout 1071906480m;
@@ -429,11 +428,11 @@ cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
 id：${v2uuid}
 加密：none
 流控：xtls-rprx-direct
-别名：自定义
 传输协议：tcp
 伪装类型：none
 底层传输：xtls
 跳过证书验证：false
+连接：vless://${v2uuid}@${your_domain}:443?security=xtls&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-splice#${your_domain}
 }
 EOF
     
@@ -510,7 +509,6 @@ cat > /usr/local/etc/xray/myconfig_tcp_tls.json<<-EOF
 端口：443
 id：${v2uuid}
 加密：none
-别名：自定义
 传输协议：tcp
 伪装类型：none
 底层传输：tls
@@ -606,6 +604,7 @@ uuid：${v2uuid}
 传输协议：grpc
 ServiceName：${your_domain}
 底层传输：tls
+链接：vless://${v2uuid}@${your_domain}:443/?type=grpc&encryption=none&serviceName=${your_domain}&security=tls#${your_domain}
 }
 EOF
 }
