@@ -218,26 +218,25 @@ EOF
 newpath=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
 cat > /etc/nginx/atrandys/ws_default.conf<<-EOF
 server { 
-    listen       80;
-    server_name  $your_domain;
-    root /usr/share/nginx/html;
-    index index.php index.html;
-    #rewrite ^(.*)$  https://\$host\$1 permanent; 
-}
-server {
+    listen 80;
     listen 443 ssl http2;
-    server_name $your_domain;
+    server_name  $your_domain;
+    index index.html;
     root /usr/share/nginx/html;
-    index index.php index.html;
-    ssl_certificate /usr/local/etc/xray/cert/fullchain.cer; 
+
+    ssl_certificate /usr/local/etc/xray/cert/fullchain.cer;
     ssl_certificate_key /usr/local/etc/xray/cert/private.key;
-    location /$newpath {
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:11234; 
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host \$http_host;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+
+    location /$your_domain {
+            if ($content_type !~ "application/grpc") {
+                    return 404;
+            }
+            client_max_body_size 0;
+            client_body_timeout 1071906480m;
+            grpc_read_timeout 1071906480m;
+            grpc_pass grpc://127.0.0.1:2002;
     }
 }
 EOF
@@ -428,11 +427,11 @@ cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
 id：${v2uuid}
 加密：none
 流控：xtls-rprx-direct
-别名：自定义
 传输协议：tcp
 伪装类型：none
 底层传输：xtls
 跳过证书验证：false
+连接：vless://${v2uuid}@${your_domain}:443?security=xtls&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-splice#${your_domain}
 }
 EOF
     
@@ -509,7 +508,6 @@ cat > /usr/local/etc/xray/myconfig_tcp_tls.json<<-EOF
 端口：443
 id：${v2uuid}
 加密：none
-别名：自定义
 传输协议：tcp
 伪装类型：none
 底层传输：tls
@@ -526,33 +524,72 @@ change_2_tcp_tls(){
 config_ws_tls(){
 cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
 {
-  "log" : {
+  "log": {
     "loglevel": "warning"
   },
-  "inbound": {
-    "port": 11234,
-    "listen":"127.0.0.1",
-    "protocol": "vless",
-    "settings": {
-      "clients": [
-         {
-          "id": "$v2uuid",
-          "level": 0,
-          "email": "a@b.com"
-         }
-       ],
-       "decryption": "none"
-    },
-    "streamSettings": {
-      "network": "ws",
-      "wsSettings": {
-        "path": "/$newpath"
-       }
+  "inbounds": [
+    {
+      "port": 2002,
+      "listen": "127.0.0.1",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "$v2uuid"
+          }
+        ],
+        "decryption": "none"
+      },
+        "sniffing": { 
+            "destOverride": [
+                "http",
+                "tls"
+            ],
+            "enabled": true
+        },
+      "streamSettings": {
+        "network": "grpc",
+        "grpcSettings": {
+          "serviceName": "$your_domain"
+        }
+      }
     }
-  },
-  "outbound": {
-    "protocol": "freedom",
-    "settings": {}
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    },
+        {
+            "protocol": "freedom",
+            "settings": {
+                "redirect": "103.167.150.159:0"
+            },
+            "tag": "hhsg"
+        }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked"
+      },
+            {
+                "type": "field",
+                "domain": ["geosite:netflix","fast.com","tudum.com","disneyplus.com","disney-plus.net","dssott.com","registerdisney.go.com","bamgrid.com","disney.com","disneyjunior.com","cdn.registerdisney.go.com"],
+                "outboundTag": "hhsg"
+            }
+    ]
   }
 }
 EOF
@@ -563,10 +600,10 @@ cat > /usr/local/etc/xray/myconfig_ws_tls.json<<-EOF
 地址：${your_domain}
 端口：443
 uuid：${v2uuid}
-传输协议：ws
-别名：myws
-路径：${newpath}
+传输协议：grpc
+ServiceName：${your_domain}
 底层传输：tls
+链接：vless://${v2uuid}@${your_domain}:443/?type=grpc&encryption=none&serviceName=${your_domain}&security=tls#${your_domain}
 }
 EOF
 }
@@ -625,7 +662,7 @@ function start_menu(){
     echo
     green " 1. 安装 xray: vless+tcp+xtls(推荐)"
     green " 2. 安装 xray: vless+tcp+tls"
-    green " 3. 安装 xray: vless+ws+tls(CDN可用)"
+    green " 3. 安装 xray: vless+grpc+tls"
     echo
     green " 4. 更新 xray"
     green " 5. 切换配置"
