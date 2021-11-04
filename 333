@@ -220,7 +220,7 @@ cat > /etc/nginx/atrandys/ws_default.conf<<-EOF
 server { 
     listen 80;
     listen 443 ssl http2;
-    server_name  $your_domain;
+    server_name $your_domain;
     index index.html;
     root /usr/share/nginx/html;
 
@@ -700,7 +700,7 @@ function start_menu(){
             echo
             green " 1. 切换至vless+tcp+xtls"
             green " 2. 切换至vless+tcp+tls"
-            green " 3. 切换至vless+ws+tls"
+            green " 3. 切换至vless+grpc+tls"
             yellow " 0. 返回上级"
             echo
             read -p "输入数字:" num
