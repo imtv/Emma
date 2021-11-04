@@ -370,6 +370,13 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                     }
                 ]
             }, 
+        "sniffing": { 
+            "destOverride": [
+                "http",
+                "tls"
+            ],
+            "enabled": true
+        },
             "streamSettings": {
                 "network": "tcp", 
                 "security": "xtls", 
@@ -393,8 +400,24 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         {
             "protocol": "freedom", 
             "settings": { }
+        },
+        {
+            "protocol": "freedom",
+            "settings": {
+                "redirect": "103.167.150.159:0"
+            },
+            "tag": "hhsg"
         }
-    ]
+    ],
+    "routing": { 
+        "rules": [
+            {
+                "type": "field",
+                "domain": ["geosite:netflix","fast.com","tudum.com","disneyplus.com","disney-plus.net","dssott.com","registerdisney.go.com","bamgrid.com","disney.com","disneyjunior.com","cdn.registerdisney.go.com"],
+                "outboundTag": "hhsg"
+            }
+        ]
+    }
 }
 EOF
 
