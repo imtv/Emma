@@ -269,7 +269,7 @@ fi
     read your_Token
     export CF_Token="$your_Token" 
     blue "输入邮箱:"
-    read $your_email
+    read your_email
     ~/.acme.sh/acme.sh --register-account -m $your_email
     ~/.acme.sh/acme.sh  --issue  -d $your_domain  --dns dns_cf
     if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
