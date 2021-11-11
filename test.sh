@@ -265,9 +265,7 @@ fi
     green "$(date +"%Y-%m-%d %H:%M:%S") - 使用acme.sh申请https证书."
     apt update && apt install socat
     curl https://get.acme.sh | sh
-    blue "输入域名Token:"
-    read your_Token
-    export CF_Token="$your_Token"
+    export CF_Token="Ge-kESS6Wx7BRm7cExQkyPjFlWg-UZlo7I5WJk9T"
     ~/.acme.sh/acme.sh --register-account -m mail@$your_domain
     ~/.acme.sh/acme.sh  --issue  -d $your_domain  --dns dns_cf
     if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
