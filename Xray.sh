@@ -265,11 +265,11 @@ fi
     green "$(date +"%Y-%m-%d %H:%M:%S") - 使用acme.sh申请https证书."
     apt update && apt install socat
     curl https://get.acme.sh | sh
-    blue "输入令牌:"
+    blue "输入cloudflare令牌:"
     read your_Token
     export CF_Token="$your_Token"
     ~/.acme.sh/acme.sh --register-account -m mail@$your_domain
-    ~/.acme.sh/acme.sh  --issue  -d $your_domain  --dns dns_cf
+    ~/.acme.sh/acme.sh --issue -d $your_domain --dns dns_cf --keylength ec-256 --force
     if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
         green "$(date +"%Y-%m-%d %H:%M:%S") - 申请https证书成功."
     else
