@@ -321,7 +321,7 @@ install_xray(){
     ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
         --key-file   /usr/local/etc/xray/cert/private.key \
         --fullchain-file  /usr/local/etc/xray/cert/fullchain.cer \
-        --reloadcmd  "chmod -R 777 /usr/local/etc/xray/cert && systemctl restart xray.service"
+        --reloadcmd  "chmod -R 700 /usr/local/etc/xray/cert && systemctl restart xray.service"
     systemctl restart nginx
     green "== 安装完成."
     if [ "$cert_failed" == "1" ]; then
