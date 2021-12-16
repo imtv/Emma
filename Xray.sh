@@ -347,6 +347,12 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
     "log": {
         "loglevel": "warning"
     }, 
+    "dns": {
+        "servers": [
+            "https+local://dns.adguard.com/dns-query"
+        ],
+        "queryStrategy": "UseIPv4"
+    },
     "inbounds": [
         {
             "listen": "0.0.0.0", 
@@ -409,14 +415,40 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "redirect": "103.167.150.159:0"
             },
             "tag": "hhsg"
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            },
+            "tag": "block"
         }
     ],
     "routing": { 
+        "domainStrategy": "IPIfNonMatch",
         "rules": [
             {
                 "type": "field",
                 "domain": ["geosite:netflix","fast.com","tudum.com","disneyplus.com","disney-plus.net","dssott.com","registerdisney.go.com","bamgrid.com","disney.com","disneyjunior.com","cdn.registerdisney.go.com"],
                 "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads-all",
+                    "geosite:cn"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
             }
         ]
     }
