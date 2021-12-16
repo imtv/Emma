@@ -268,7 +268,6 @@ fi
     blue "输入cloudflare令牌:"
     read your_Token
     export CF_Token="$your_Token"
-    ~/.acme.sh/acme.sh --register-account -m mail@$your_domain
     ~/.acme.sh/acme.sh --server letsencrypt --issue -d $your_domain --dns dns_cf
     if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
         green "$(date +"%Y-%m-%d %H:%M:%S") - 申请https证书成功."
