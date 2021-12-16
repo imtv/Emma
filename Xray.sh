@@ -562,6 +562,12 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
   "log": {
     "loglevel": "warning"
   },
+    "dns": {
+        "servers": [
+            "https+local://dns.adguard.com/dns-query"
+        ],
+        "queryStrategy": "UseIPv4"
+    },
   "inbounds": [
     {
       "port": 2002,
@@ -590,42 +596,54 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
       }
     }
   ],
-  "outbounds": [
-    {
-      "tag": "direct",
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "tag": "blocked",
-      "protocol": "blackhole",
-      "settings": {}
-    },
+    "outbounds": [
+        {
+            "protocol": "freedom", 
+            "settings": { }
+        },
         {
             "protocol": "freedom",
             "settings": {
                 "redirect": "103.167.150.159:0"
             },
             "tag": "hhsg"
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            },
+            "tag": "block"
         }
-  ],
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "geoip:private"
-        ],
-        "outboundTag": "blocked"
-      },
+    ],
+    "routing": { 
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
             {
                 "type": "field",
                 "domain": ["geosite:netflix","fast.com","tudum.com","disneyplus.com","disney-plus.net","dssott.com","registerdisney.go.com","bamgrid.com","disney.com","disneyjunior.com","cdn.registerdisney.go.com"],
                 "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads-all",
+                    "geosite:cn"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
             }
-    ]
-  }
+        ]
+    }
 }
 EOF
 
