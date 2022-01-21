@@ -267,6 +267,14 @@ fi
     curl https://get.acme.sh | sh
     blue "输入cloudflare令牌:"
     read your_Token
+    blue "输入stream的IP:"
+    read stream_IP
+    blue "输入stream的端口:"
+    read stream_port
+    blue "输入stream的用户名:"
+    read stream_id
+    blue "输入stream的密码:"
+    read stream_password
     export CF_Token="$your_Token"
     ~/.acme.sh/acme.sh --server letsencrypt --issue -d $your_domain --dns dns_cf
     if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
@@ -408,13 +416,24 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
             "protocol": "freedom", 
             "settings": { }
         },
-        {
-            "protocol": "freedom",
-            "settings": {
-                "redirect": "103.167.150.159:0"
-            },
-            "tag": "hhsg"
-        },
+    {
+      "tag": "stream",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "${stream_IP}",
+            "port": ${stream_port},
+            "users": [
+              {
+                "user": "${stream_id}",
+                "pass": "${stream_password}"
+              }
+            ]
+          }
+        ]
+      }
+    },
         {
             "protocol": "blackhole",
             "settings": {
@@ -430,8 +449,8 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","fast.com","tudum.com","disneyplus.com","disney-plus.net","dssott.com","registerdisney.go.com","bamgrid.com","disney.com","disneyjunior.com","cdn.registerdisney.go.com"],
-                "outboundTag": "hhsg"
+                "domain": ["geosite:netflix","fast.com","tudum.com","bamgrid.com"],
+                "outboundTag": "stream"
             },
             {
                 "type": "field",
@@ -600,13 +619,24 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
             "protocol": "freedom", 
             "settings": { }
         },
-        {
-            "protocol": "freedom",
-            "settings": {
-                "redirect": "103.167.150.159:0"
-            },
-            "tag": "hhsg"
-        },
+    {
+      "tag": "stream",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "${stream_IP}",
+            "port": ${stream_port},
+            "users": [
+              {
+                "user": "${stream_id}",
+                "pass": "${stream_password}"
+              }
+            ]
+          }
+        ]
+      }
+    },
         {
             "protocol": "blackhole",
             "settings": {
@@ -622,8 +652,8 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","fast.com","tudum.com","disneyplus.com","disney-plus.net","dssott.com","registerdisney.go.com","bamgrid.com","disney.com","disneyjunior.com","cdn.registerdisney.go.com"],
-                "outboundTag": "hhsg"
+                "domain": ["geosite:netflix","fast.com","tudum.com","bamgrid.com"],
+                "outboundTag": "stream"
             },
             {
                 "type": "field",
