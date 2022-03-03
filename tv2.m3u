@@ -30,8 +30,8 @@ http://[2409:8087:5c00:10:5::121]/cdnrrs.gx.chinamobile.com/PLTV/3/224/322122578
 http://[2409:8087:5c00:10:5::74]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225673/index.m3u8
 #EXTINF:-1,CCTV15
 http://[2409:8087:5c00:10:5::122]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225830/index.m3u8
-#EXTINF:-1,CCTV16
-http://[2409:8087:5c00:10:5::87]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225897/index.m3u8
+#EXTINF:-1,CCTV16-4K
+http://[2409:8087:1030:301:2025::28]/gslbserv.iptv.nm.chinamobile.com/PLTV/88888890/224/3221226301/index.m3u8?fmt=ts2hls
 #EXTINF:-1,CCTV17
 http://[2409:8087:5c00:10:5::74]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225833/index.m3u8
 #EXTINF:-1,北京冬奥纪实
