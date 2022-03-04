@@ -296,10 +296,10 @@ change_2_ws_nginx(){
 
 install_xray(){ 
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装xray"
-    mkdir /usr/local/etc/xray/
+    mkdir /etc/v2ray/
     mkdir /usr/local/etc/xray/cert
-    bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
-    cd /usr/local/etc/xray/
+    bash <(curl -L -s https://install.direct/go.sh)
+    cd /etc/v2ray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
     if [ -d "/usr/share/nginx/html/" ]; then
