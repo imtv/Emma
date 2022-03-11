@@ -693,7 +693,7 @@ uuid：${v2uuid}
 传输协议：grpc
 ServiceName：${your_domain}
 底层传输：tls
-链接：vless://${v2uuid}@${your_domain}:443/?type=grpc&encryption=none&serviceName=${your_domain}&security=tls#${your_domain}
+链接：vless://${v2uuid}@${your_domain}:443?mode=multi&type=grpc&encryption=none&serviceName=${your_domain}&security=tls#${your_domain}
 }
 EOF
 }
