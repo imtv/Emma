@@ -36,10 +36,16 @@ http://[2409:8087:5c00:10:5::87]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225897
 http://[2409:8087:1030:301:2025::28]/gslbserv.iptv.nm.chinamobile.com/PLTV/88888890/224/3221226301/index.m3u8?fmt=ts2hls
 #EXTINF:-1,CCTV17
 http://[2409:8087:5c00:10:5::74]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225833/index.m3u8
-#EXTINF:-1,CCTV4K
+#EXTINF:-1,CCTV4K①
 http://liveop.cctv.cn/hls/4KHD/playlist.m3u8
+#EXTINF:-1,CCTV4K②
+http://zterr.hvs.fj.chinamobile.com:6060/PLTV/88888888/224/3221226998/index.m3u8?servicetype=1
 #EXTINF:-1,北京冬奥纪实
 http://[2409:8087:5c00:10:5::98]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225667/index.m3u8
+#EXTINF:-1,凤凰中文
+http://zterr.hvs.fj.chinamobile.com:6060/PLTV/88888888/224/3221227222/index.m3u8?servicetype=1
+#EXTINF:-1,凤凰资讯
+http://zterr.hvs.fj.chinamobile.com:6060/PLTV/88888888/224/3221227226/index.m3u8?servicetype=1
 #EXTINF:-1,东方卫视
 http://[2409:8087:5c00:10:5::124]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225682/index.m3u8
 #EXTINF:-1,湖南卫视
