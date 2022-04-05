@@ -94,7 +94,5 @@ http://iptv.tvfix.org/hls/shdycjhd.m3u8
 http://iptv.tvfix.org/hls/wxtyhd.m3u8
 #EXTINF:-1 group-title="上海",上海纪实人文
 http://[2409:8087:5c00:10:5::125]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225688/index.m3u8
-#EXTINF:-1 group-title="上海",上海哈哈炫动
-http://140.207.241.2:8080/live/program/live/hhxdhd/4000000/mnf.m3u8
-#EXTINF:-1 group-title="上海",上海教育
-http://140.207.241.2:8080/live/program/live/setv/1300000/mnf.m3u8
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/hhxd.png" group-title="上海",上海哈哈炫动
+http://iptv.tvfix.org/hls/hhxdhd.m3u8
