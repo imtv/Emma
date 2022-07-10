@@ -1,7 +1,3 @@
-#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dongfang.png" group-title="上海",东方卫视
-http://[2409:8087:5c00:10:5::124]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225682/index.m3u8
-#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/shwx.png" group-title="上海",上视新闻频道
-http://iptv.tvfix.org/hls/shxwzhhd.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png" group-title="央视",CCTV1
 http://[2409:8087:5c00:10:5::137]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225894/index.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/cctv2.png" group-title="央视",CCTV2
@@ -46,6 +42,8 @@ http://liveop.cctv.cn/hls/4KHD/playlist.m3u8
 http://zterr.hvs.fj.chinamobile.com:6060/PLTV/88888888/224/3221226998/index.m3u8?servicetype=1
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/cctv4k.png" group-title="4K",CCTV4K
 http://open.live-web.timetv.cn/live03/cctv4k.m3u8
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dongfang.png" group-title="卫视",东方卫视
+http://[2409:8087:5c00:10:5::124]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225682/index.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/fenghuangzhongwen.png" group-title="卫视",凤凰中文
 http://zterr.hvs.fj.chinamobile.com:6060/PLTV/88888888/224/3221227222/index.m3u8?servicetype=1
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/fenghuangzixun.png" group-title="卫视",凤凰资讯
@@ -82,19 +80,19 @@ http://[2409:8087:5c00:10:5::122]/cdnrrs.gx.chinamobile.com/PLTV/3/224/322122563
 http://[2409:8087:5c00:10:5::93]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225679/index.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/heilongjiang.png" group-title="卫视",黑龙江卫视
 http://[2409:8087:5c00:10:5::84]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225686/index.m3u8
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/shwx.png" group-title="上海",上视新闻频道
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/xwzhhd/4000000/mnf.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/shds.png" group-title="上海",上海都市频道
-http://iptv.tvfix.org/hls/shdspdhd.m3u8
-#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dfys.png" group-title="上海",东方影视
-http://iptv.tvfix.org/hls/shdfyshd.m3u8
-#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/shwy.png" group-title="上海",上视外语频道
-http://iptv.tvfix.org/hls/shwypdhd.m3u8
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/ylpdhd/4000000/mnf.m3u8
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dfys.png" group-title="上海",东方影视频道
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/dsjpdhd/4000000/mnf.m3u8
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/shwy.png" group-title="上海",上海ICS外语频道
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/wypdhd/4000000/mnf.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dycj.png" group-title="上海",第一财经
-http://iptv.tvfix.org/hls/shdycjhd.m3u8
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/dycjhd/4000000/mnf.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/wxty.png" group-title="上海",五星体育频道
-http://iptv.tvfix.org/hls/wxtyhd.m3u8
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/ssty/4000000/mnf.m3u8
 #EXTINF:-1 group-title="上海",上海纪实人文
-http://[2409:8087:5c00:10:5::125]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225688/index.m3u8
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/jspdhd/4000000/mnf.m3u8
 #EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/hhxd.png" group-title="上海",上海哈哈炫动
-http://iptv.tvfix.org/hls/hhxdhd.m3u8
-#EXTINF:-1 group-title="小米",小米
-https://v2.zb.marketing.i.mi.com/live/2353808566_1656900022.flv
+http://shbu.live.bestvcdn.com.cn:8080/live/program/live/hhxdhd/4000000/mnf.m3u8
