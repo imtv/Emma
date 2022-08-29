@@ -3,5 +3,5 @@
 http://10.10.10.4:4022/rtp/225.0.0.2:6140
 #EXTINF:-1 tvg-id="1984" tvg-logo="http://n.ysyz.top:99/buyaolian/shwx.png" group-title="上海",上视新闻频道
 http://10.10.10.4:4022/rtp/225.0.0.1:6140
-#EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png" group-title="央视",CCTV16
+#EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png" group-title="央视",CCTV16-4K
 http://10.10.10.4:4022/rtp/225.0.0.181:6140
