@@ -49,8 +49,6 @@ http://10.10.10.4:3000/rtp/225.0.0.39:6140
 http://10.10.10.4:3000/rtp/225.0.0.181:6140
 #EXTINF:-1 tvg-id="17" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv17.png" group-title="内网",CCTV17
 http://10.10.10.4:3000/rtp/225.0.0.215:6140
-#EXTINF:-1 tvg-id="25" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv4k.png" group-title="内网",CCTV4K
-https://p.ggiptv.com/v/4k.m3u8
 #EXTINF:-1 tvg-id="20" tvg-logo="http://n.ysyz.top:99/buyaolian/cgtn.png" group-title="内网",CGTN-标清
 http://10.10.10.4:3000/rtp/225.0.0.33:6140
 #EXTINF:-1 tvg-id="27" tvg-logo="http://n.ysyz.top:99/buyaolian/hunan.png" group-title="内网",湖南卫视
