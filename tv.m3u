@@ -35,16 +35,16 @@ http://10.10.10.4:3000/rtp/225.0.0.32:6140
 http://10.10.10.4:3000/rtp/225.0.0.211:6140
 #EXTINF:-1 tvg-id="11" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv10.png" group-title="内网",CCTV10
 http://10.10.10.4:3000/rtp/225.0.0.212:6140
-#EXTINF:-1 tvg-id="12" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv11.png" group-title="内网",CCTV11-标清
-http://10.10.10.4:3000/rtp/225.0.0.35:6140
+#EXTINF:-1 tvg-id="12" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv11.png" group-title="内网",CCTV11
+http://10.10.10.4:3000/rtp/225.0.0.227:6140
 #EXTINF:-1 tvg-id="13" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv12.png" group-title="内网",CCTV12
 http://10.10.10.4:3000/rtp/225.0.0.213:6140
-#EXTINF:-1 tvg-id="14" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv13.png" group-title="内网",CCTV13-标清
-http://10.10.10.4:3000/rtp/225.0.0.37:6140
+#EXTINF:-1 tvg-id="14" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv13.png" group-title="内网",CCTV13
+http://10.10.10.4:3000/rtp/225.0.0.228:6140
 #EXTINF:-1 tvg-id="15" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv14.png" group-title="内网",CCTV14
 http://10.10.10.4:3000/rtp/225.0.0.214:6140
-#EXTINF:-1 tvg-id="16" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv15.png" group-title="内网",CCTV15-标清
-http://10.10.10.4:3000/rtp/225.0.0.39:6140
+#EXTINF:-1 tvg-id="16" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv15.png" group-title="内网",CCTV15
+http://10.10.10.4:3000/rtp/225.0.0.229:6140
 #EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png" group-title="内网",CCTV16-4K
 http://10.10.10.4:3000/rtp/225.0.0.181:6140
 #EXTINF:-1 tvg-id="17" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv17.png" group-title="内网",CCTV17
