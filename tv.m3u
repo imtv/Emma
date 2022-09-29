@@ -1,136 +1,136 @@
 #EXTM3U x-tvg-url="http://epg.51zmt.top:8000/e.xml"
 #EXTINF:-1 tvg-id="1984" tvg-logo="http://n.ysyz.top:99/buyaolian/shwx.png" group-title="内网",新闻综合
-http://10.10.10.4:3000/rtp/225.0.0.1:6140
+http://10.10.10.1:3000/rtp/225.0.0.1:6140
 #EXTINF:-1 tvg-id="1989" tvg-logo="http://n.ysyz.top:99/buyaolian/shds.png" group-title="内网",都市频道
-http://10.10.10.4:3000/rtp/225.0.0.3:6140
+http://10.10.10.1:3000/rtp/225.0.0.3:6140
 #EXTINF:-1 tvg-id="1896" tvg-logo="http://n.ysyz.top:99/buyaolian/dfys.png" group-title="内网",东方影视
-http://10.10.10.4:3000/rtp/225.0.0.5:6140
+http://10.10.10.1:3000/rtp/225.0.0.5:6140
 #EXTINF:-1 tvg-id="1988" tvg-logo="http://n.ysyz.top:99/buyaolian/jishirenwen.png" group-title="内网",纪实人文
-http://10.10.10.4:3000/rtp/225.0.0.6:6140
+http://10.10.10.1:3000/rtp/225.0.0.6:6140
 #EXTINF:-1 tvg-id="1985" tvg-logo="http://n.ysyz.top:99/buyaolian/dycj.png" group-title="内网",第一财经
-http://10.10.10.4:3000/rtp/225.0.0.7:6140
+http://10.10.10.1:3000/rtp/225.0.0.7:6140
 #EXTINF:-1 tvg-id="1987" tvg-logo="http://n.ysyz.top:99/buyaolian/wxty.png" group-title="内网",五星体育
-http://10.10.10.4:3000/rtp/225.0.0.8:6140
+http://10.10.10.1:3000/rtp/225.0.0.8:6140
 #EXTINF:-1 tvg-id="62" tvg-logo="http://n.ysyz.top:99/buyaolian/hhxd.png" group-title="内网",哈哈炫动
-http://10.10.10.4:3000/rtp/225.0.0.208:6140
+http://10.10.10.1:3000/rtp/225.0.0.208:6140
 #EXTINF:-1 tvg-id="1991" tvg-logo="http://n.ysyz.top:99/buyaolian/shwy.png" group-title="内网",上视外语频道
-http://10.10.10.4:3000/rtp/225.0.0.10:6140
+http://10.10.10.1:3000/rtp/225.0.0.10:6140
 #EXTINF:-1 tvg-id="1" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png" group-title="内网",CCTV1
-http://10.10.10.4:3000/rtp/225.0.0.25:6140
+http://10.10.10.1:3000/rtp/225.0.0.25:6140
 #EXTINF:-1 tvg-id="2" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv2.png" group-title="内网",CCTV2
-http://10.10.10.4:3000/rtp/225.0.0.190:6140
+http://10.10.10.1:3000/rtp/225.0.0.190:6140
 #EXTINF:-1 tvg-id="3" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv3.png" group-title="内网",CCTV3
-http://10.10.10.4:3000/rtp/225.0.0.27:6140
+http://10.10.10.1:3000/rtp/225.0.0.27:6140
 #EXTINF:-1 tvg-id="4" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv4.png" group-title="内网",CCTV4
-http://10.10.10.4:3000/rtp/225.0.0.191:6140
+http://10.10.10.1:3000/rtp/225.0.0.191:6140
 #EXTINF:-1 tvg-id="5" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv5.png" group-title="内网",CCTV5
-http://10.10.10.4:3000/rtp/225.0.0.29:6140
+http://10.10.10.1:3000/rtp/225.0.0.29:6140
 #EXTINF:-1 tvg-id="7" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv6.png" group-title="内网",CCTV6
-http://10.10.10.4:3000/rtp/225.0.0.30:6140
+http://10.10.10.1:3000/rtp/225.0.0.30:6140
 #EXTINF:-1 tvg-id="8" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv7.png" group-title="内网",CCTV7
-http://10.10.10.4:3000/rtp/225.0.0.210:6140
+http://10.10.10.1:3000/rtp/225.0.0.210:6140
 #EXTINF:-1 tvg-id="9" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv8.png" group-title="内网",CCTV8
-http://10.10.10.4:3000/rtp/225.0.0.32:6140
+http://10.10.10.1:3000/rtp/225.0.0.32:6140
 #EXTINF:-1 tvg-id="10" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv9.png" group-title="内网",CCTV9
-http://10.10.10.4:3000/rtp/225.0.0.211:6140
+http://10.10.10.1:3000/rtp/225.0.0.211:6140
 #EXTINF:-1 tvg-id="11" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv10.png" group-title="内网",CCTV10
-http://10.10.10.4:3000/rtp/225.0.0.212:6140
+http://10.10.10.1:3000/rtp/225.0.0.212:6140
 #EXTINF:-1 tvg-id="12" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv11.png" group-title="内网",CCTV11
-http://10.10.10.4:3000/rtp/225.0.0.227:6140
+http://10.10.10.1:3000/rtp/225.0.0.227:6140
 #EXTINF:-1 tvg-id="13" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv12.png" group-title="内网",CCTV12
-http://10.10.10.4:3000/rtp/225.0.0.213:6140
+http://10.10.10.1:3000/rtp/225.0.0.213:6140
 #EXTINF:-1 tvg-id="14" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv13.png" group-title="内网",CCTV13
-http://10.10.10.4:3000/rtp/225.0.0.228:6140
+http://10.10.10.1:3000/rtp/225.0.0.228:6140
 #EXTINF:-1 tvg-id="15" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv14.png" group-title="内网",CCTV14
-http://10.10.10.4:3000/rtp/225.0.0.214:6140
+http://10.10.10.1:3000/rtp/225.0.0.214:6140
 #EXTINF:-1 tvg-id="16" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv15.png" group-title="内网",CCTV15
-http://10.10.10.4:3000/rtp/225.0.0.229:6140
+http://10.10.10.1:3000/rtp/225.0.0.229:6140
 #EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png" group-title="内网",CCTV16-4K
-http://10.10.10.4:3000/rtp/225.0.0.181:6140
+http://10.10.10.1:3000/rtp/225.0.0.181:6140
 #EXTINF:-1 tvg-id="17" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv17.png" group-title="内网",CCTV17
-http://10.10.10.4:3000/rtp/225.0.0.215:6140
+http://10.10.10.1:3000/rtp/225.0.0.215:6140
 #EXTINF:-1 tvg-id="20" tvg-logo="http://n.ysyz.top:99/buyaolian/cgtn.png" group-title="内网",CGTN-标清
-http://10.10.10.4:3000/rtp/225.0.0.33:6140
+http://10.10.10.1:3000/rtp/225.0.0.33:6140
 #EXTINF:-1 tvg-id="27" tvg-logo="http://n.ysyz.top:99/buyaolian/hunan.png" group-title="内网",湖南卫视
-http://10.10.10.4:3000/rtp/225.0.0.55:6140
+http://10.10.10.1:3000/rtp/225.0.0.55:6140
 #EXTINF:-1 tvg-id="28" tvg-logo="http://n.ysyz.top:99/buyaolian/zhejiang.png" group-title="内网",浙江卫视
-http://10.10.10.4:3000/rtp/225.0.0.54:6140
+http://10.10.10.1:3000/rtp/225.0.0.54:6140
 #EXTINF:-1 tvg-id="29" tvg-logo="http://n.ysyz.top:99/buyaolian/jiangsu.png" group-title="内网",江苏卫视
-http://10.10.10.4:3000/rtp/225.0.0.53:6140
+http://10.10.10.1:3000/rtp/225.0.0.53:6140
 #EXTINF:-1 tvg-id="31" tvg-logo="http://n.ysyz.top:99/buyaolian/dongfang.png" group-title="内网",东方卫视
-http://10.10.10.4:3000/rtp/225.0.0.2:6140
+http://10.10.10.1:3000/rtp/225.0.0.2:6140
 #EXTINF:-1 tvg-id="30" tvg-logo="http://n.ysyz.top:99/buyaolian/beijing1.png" group-title="内网",北京卫视
-http://10.10.10.4:3000/rtp/225.0.0.52:6140
+http://10.10.10.1:3000/rtp/225.0.0.52:6140
 #EXTINF:-1 tvg-id="39" tvg-logo="http://n.ysyz.top:99/buyaolian/tianjin.png" group-title="内网",天津卫视
-http://10.10.10.4:3000/rtp/225.0.0.59:6140
+http://10.10.10.1:3000/rtp/225.0.0.59:6140
 #EXTINF:-1 tvg-id="33" tvg-logo="http://n.ysyz.top:99/buyaolian/guangdong.png" group-title="内网",广东卫视
-http://10.10.10.4:3000/rtp/225.0.0.63:6140
+http://10.10.10.1:3000/rtp/225.0.0.63:6140
 #EXTINF:-1 tvg-id="34" tvg-logo="http://n.ysyz.top:99/buyaolian/shenzhen.png" group-title="内网",深圳卫视
-http://10.10.10.4:3000/rtp/225.0.0.64:6140
+http://10.10.10.1:3000/rtp/225.0.0.64:6140
 #EXTINF:-1 tvg-id="41" tvg-logo="http://n.ysyz.top:99/buyaolian/dongnan.png" group-title="内网",东南卫视
-http://10.10.10.4:3000/rtp/225.0.0.65:6140
+http://10.10.10.1:3000/rtp/225.0.0.65:6140
 #EXTINF:-1 tvg-id="36" tvg-logo="http://n.ysyz.top:99/buyaolian/liaoning.png" group-title="内网",辽宁卫视
-http://10.10.10.4:3000/rtp/225.0.0.61:6140
+http://10.10.10.1:3000/rtp/225.0.0.61:6140
 #EXTINF:-1 tvg-id="38" tvg-logo="http://n.ysyz.top:99/buyaolian/shandong.png" group-title="内网",山东卫视
-http://10.10.10.4:3000/rtp/225.0.0.56:6140
+http://10.10.10.1:3000/rtp/225.0.0.56:6140
 #EXTINF:-1 tvg-id="47" tvg-logo="http://n.ysyz.top:99/buyaolian/henan.png" group-title="内网",河南卫视
-http://10.10.10.4:3000/rtp/225.0.0.192:6140
+http://10.10.10.1:3000/rtp/225.0.0.192:6140
 #EXTINF:-1 tvg-id="45" tvg-logo="http://n.ysyz.top:99/buyaolian/hebei.png" group-title="内网",河北卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.69:6140
+http://10.10.10.1:3000/rtp/225.0.0.69:6140
 #EXTINF:-1 tvg-id="32" tvg-logo="http://n.ysyz.top:99/buyaolian/anhui.png" group-title="内网",安徽卫视
-http://10.10.10.4:3000/rtp/225.0.0.58:6140
+http://10.10.10.1:3000/rtp/225.0.0.58:6140
 #EXTINF:-1 tvg-id="48" tvg-logo="http://n.ysyz.top:99/buyaolian/hubei.png" group-title="内网",湖北卫视
-http://10.10.10.4:3000/rtp/225.0.0.62:6140
+http://10.10.10.1:3000/rtp/225.0.0.62:6140
 #EXTINF:-1 tvg-id="50" tvg-logo="http://n.ysyz.top:99/buyaolian/jiangxi.png" group-title="内网",江西卫视
-http://10.10.10.4:3000/rtp/225.0.0.60:6140
+http://10.10.10.1:3000/rtp/225.0.0.60:6140
 #EXTINF:-1 tvg-id="44" tvg-logo="http://n.ysyz.top:99/buyaolian/guizhou.png" group-title="内网",贵州卫视
-http://10.10.10.4:3000/rtp/225.0.0.78:6140
+http://10.10.10.1:3000/rtp/225.0.0.78:6140
 #EXTINF:-1 tvg-id="40" tvg-logo="http://n.ysyz.top:99/buyaolian/chongqing.png" group-title="内网",重庆卫视
-http://10.10.10.4:3000/rtp/225.0.0.68:6140
+http://10.10.10.1:3000/rtp/225.0.0.68:6140
 #EXTINF:-1 tvg-id="56" tvg-logo="http://n.ysyz.top:99/buyaolian/sichuan.png" group-title="内网",四川卫视
-http://10.10.10.4:3000/rtp/225.0.0.67:6140
+http://10.10.10.1:3000/rtp/225.0.0.67:6140
 #EXTINF:-1 tvg-id="37" tvg-logo="http://n.ysyz.top:99/buyaolian/hainan.png" group-title="内网",海南卫视
-http://10.10.10.4:3000/rtp/225.0.0.83:6140
+http://10.10.10.1:3000/rtp/225.0.0.83:6140
 #EXTINF:-1 tvg-id="51" tvg-logo="http://n.ysyz.top:99/buyaolian/jilin.png" group-title="内网",吉林卫视
-http://10.10.10.4:3000/rtp/225.0.0.195:6140
+http://10.10.10.1:3000/rtp/225.0.0.195:6140
 #EXTINF:-1 tvg-id="58" tvg-logo="http://n.ysyz.top:99/buyaolian/yunnan.png" group-title="内网",云南卫视
-http://10.10.10.4:3000/rtp/225.0.0.193:6140
+http://10.10.10.1:3000/rtp/225.0.0.193:6140
 #EXTINF:-1 tvg-id="46" tvg-logo="http://n.ysyz.top:99/buyaolian/heilongjiang.png" group-title="内网",黑龙江卫视
-http://10.10.10.4:3000/rtp/225.0.0.57:6140
+http://10.10.10.1:3000/rtp/225.0.0.57:6140
 #EXTINF:-1 tvg-id="52" tvg-logo="http://n.ysyz.top:99/buyaolian/neimenggu.png" group-title="内网",内蒙古卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.70:6140
+http://10.10.10.1:3000/rtp/225.0.0.70:6140
 #EXTINF:-1 tvg-id="43" tvg-logo="http://n.ysyz.top:99/buyaolian/guangxi.png" group-title="内网",广西卫视
-http://10.10.10.4:3000/rtp/225.0.0.194:6140
+http://10.10.10.1:3000/rtp/225.0.0.194:6140
 #EXTINF:-1 tvg-id="42" tvg-logo="http://n.ysyz.top:99/buyaolian/gansu.png" group-title="内网",甘肃卫视
-http://10.10.10.4:3000/rtp/225.0.0.224:6140
+http://10.10.10.1:3000/rtp/225.0.0.224:6140
 #EXTINF:-1 tvg-id="55" tvg-logo="http://n.ysyz.top:99/buyaolian/shanxi1.png" group-title="内网",陕西卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.73:6140
+http://10.10.10.1:3000/rtp/225.0.0.73:6140
 #EXTINF:-1 tvg-id="54" tvg-logo="http://n.ysyz.top:99/buyaolian/shanxi.png" group-title="内网",山西卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.72:6140
+http://10.10.10.1:3000/rtp/225.0.0.72:6140
 #EXTINF:-1 tvg-id="53" tvg-logo="http://n.ysyz.top:99/buyaolian/ningxia.png" group-title="内网",宁夏卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.79:6140
+http://10.10.10.1:3000/rtp/225.0.0.79:6140
 #EXTINF:-1 tvg-id="59" tvg-logo="http://n.ysyz.top:99/buyaolian/qinghai.png" group-title="内网",青海卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.75:6140
+http://10.10.10.1:3000/rtp/225.0.0.75:6140
 #EXTINF:-1 tvg-id="57" tvg-logo="http://n.ysyz.top:99/buyaolian/xinjiang.png" group-title="内网",新疆卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.80:6140
+http://10.10.10.1:3000/rtp/225.0.0.80:6140
 #EXTINF:-1 tvg-id="71" tvg-logo="http://n.ysyz.top:99/buyaolian/xizang.png" group-title="内网",西藏卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.81:6140
+http://10.10.10.1:3000/rtp/225.0.0.81:6140
 #EXTINF:-1 tvg-id="61" tvg-logo="http://n.ysyz.top:99/buyaolian/bingtuan.png" group-title="内网",兵团卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.84:6140
+http://10.10.10.1:3000/rtp/225.0.0.84:6140
 #EXTINF:-1 tvg-id="72" tvg-logo="http://n.ysyz.top:99/buyaolian/sansha.png" group-title="内网",三沙卫视-标清
-http://10.10.10.4:3000/rtp/225.0.0.85:6140
+http://10.10.10.1:3000/rtp/225.0.0.85:6140
 #EXTINF:-1 group-title="内网",东方购物-1
-http://10.10.10.4:3000/rtp/225.0.0.11:6140
+http://10.10.10.1:3000/rtp/225.0.0.11:6140
 #EXTINF:-1 group-title="内网",东方购物-2
-http://10.10.10.4:3000/rtp/225.0.0.12:6140
+http://10.10.10.1:3000/rtp/225.0.0.12:6140
 #EXTINF:-1 group-title="内网",东方购物-3
-http://10.10.10.4:3000/rtp/225.0.0.17:6140
+http://10.10.10.1:3000/rtp/225.0.0.17:6140
 #EXTINF:-1 group-title="内网",东方购物-4
-http://10.10.10.4:3000/rtp/225.0.0.18:6140
+http://10.10.10.1:3000/rtp/225.0.0.18:6140
 #EXTINF:-1 group-title="内网",东方购物-5
-http://10.10.10.4:3000/rtp/225.0.0.19:6140
+http://10.10.10.1:3000/rtp/225.0.0.19:6140
 #EXTINF:-1 group-title="内网",教育电视台
-http://10.10.10.4:3000/rtp/225.0.0.222:6140
+http://10.10.10.1:3000/rtp/225.0.0.222:6140
 
 #EXTINF:-1 tvg-id="1" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png" group-title="IPV6",CCTV1
 http://[2409:8087:5c00:10:5::137]/cdnrrs.gx.chinamobile.com/PLTV/3/224/3221225894/index.m3u8
