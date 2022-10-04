@@ -25,6 +25,8 @@ http://10.10.10.1:3000/rtp/225.0.0.27:6140
 http://10.10.10.1:3000/rtp/225.0.0.191:6140
 #EXTINF:-1 tvg-id="5" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv5.png",CCTV5
 http://10.10.10.1:3000/rtp/225.0.0.29:6140
+#EXTINF:-1 tvg-id="5" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv5.png",CCTV5
+http://10.10.10.1:3000/rtp/225.0.0.166:6140
 #EXTINF:-1 tvg-id="7" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv6.png",CCTV6
 http://10.10.10.1:3000/rtp/225.0.0.30:6140
 #EXTINF:-1 tvg-id="8" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv7.png",CCTV7
@@ -45,12 +47,12 @@ http://10.10.10.1:3000/rtp/225.0.0.228:6140
 http://10.10.10.1:3000/rtp/225.0.0.214:6140
 #EXTINF:-1 tvg-id="16" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv15.png",CCTV15
 http://10.10.10.1:3000/rtp/225.0.0.229:6140
+#EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png",CCTV16
+http://10.10.10.1:3000/rtp/225.0.0.180:6140
 #EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png",CCTV16-4K
 http://10.10.10.1:3000/rtp/225.0.0.181:6140
 #EXTINF:-1 tvg-id="17" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv17.png",CCTV17
 http://10.10.10.1:3000/rtp/225.0.0.215:6140
-#EXTINF:-1 tvg-id="20" tvg-logo="http://n.ysyz.top:99/buyaolian/cgtn.png",CGTN-标清
-http://10.10.10.1:3000/rtp/225.0.0.33:6140
 #EXTINF:-1 tvg-id="27" tvg-logo="http://n.ysyz.top:99/buyaolian/hunan.png",湖南卫视
 http://10.10.10.1:3000/rtp/225.0.0.55:6140
 #EXTINF:-1 tvg-id="28" tvg-logo="http://n.ysyz.top:99/buyaolian/zhejiang.png",浙江卫视
@@ -75,8 +77,8 @@ http://10.10.10.1:3000/rtp/225.0.0.61:6140
 http://10.10.10.1:3000/rtp/225.0.0.56:6140
 #EXTINF:-1 tvg-id="47" tvg-logo="http://n.ysyz.top:99/buyaolian/henan.png",河南卫视
 http://10.10.10.1:3000/rtp/225.0.0.192:6140
-#EXTINF:-1 tvg-id="45" tvg-logo="http://n.ysyz.top:99/buyaolian/hebei.png",河北卫视-标清
-http://10.10.10.1:3000/rtp/225.0.0.69:6140
+#EXTINF:-1 tvg-id="45" tvg-logo="http://n.ysyz.top:99/buyaolian/hebei.png",河北卫视
+http://10.10.10.1:3000/rtp/225.0.0.143:6140
 #EXTINF:-1 tvg-id="32" tvg-logo="http://n.ysyz.top:99/buyaolian/anhui.png",安徽卫视
 http://10.10.10.1:3000/rtp/225.0.0.58:6140
 #EXTINF:-1 tvg-id="48" tvg-logo="http://n.ysyz.top:99/buyaolian/hubei.png",湖北卫视
@@ -119,15 +121,49 @@ http://10.10.10.1:3000/rtp/225.0.0.81:6140
 http://10.10.10.1:3000/rtp/225.0.0.84:6140
 #EXTINF:-1 tvg-id="72" tvg-logo="http://n.ysyz.top:99/buyaolian/sansha.png",三沙卫视-标清
 http://10.10.10.1:3000/rtp/225.0.0.85:6140
-#EXTINF:-1,东方购物-1
+#EXTINF:-1,东方购物
 http://10.10.10.1:3000/rtp/225.0.0.11:6140
-#EXTINF:-1,东方购物-2
+#EXTINF:-1,东方购物
 http://10.10.10.1:3000/rtp/225.0.0.12:6140
-#EXTINF:-1,东方购物-3
-http://10.10.10.1:3000/rtp/225.0.0.17:6140
-#EXTINF:-1,东方购物-4
-http://10.10.10.1:3000/rtp/225.0.0.18:6140
-#EXTINF:-1,东方购物-5
-http://10.10.10.1:3000/rtp/225.0.0.19:6140
 #EXTINF:-1,教育电视台
 http://10.10.10.1:3000/rtp/225.0.0.222:6140
+#EXTINF:-1,CETV1
+http://10.10.10.1:3000/rtp/225.0.0.66:6140
+#EXTINF:-1,CETV4
+http://10.10.10.1:3000/rtp/225.0.0.230:6140
+#EXTINF:-1,金鹰纪实
+http://10.10.10.1:3000/rtp/225.0.0.144:6140
+#EXTINF:-1,都市剧场
+http://10.10.10.1:3000/rtp/225.0.0.157:6140
+#EXTINF:-1,欢笑剧场
+http://10.10.10.1:3000/rtp/225.0.0.158:6140
+#EXTINF:-1,金色学堂
+http://10.10.10.1:3000/rtp/225.0.0.159:6140
+#EXTINF:-1,法制天地
+http://10.10.10.1:3000/rtp/225.0.0.160:6140
+#EXTINF:-1,动漫秀场
+http://10.10.10.1:3000/rtp/225.0.0.161:6140
+#EXTINF:-1,游戏风云
+http://10.10.10.1:3000/rtp/225.0.0.162:6140
+#EXTINF:-1,生活时尚
+http://10.10.10.1:3000/rtp/225.0.0.163:6140
+#EXTINF:-1,乐游
+http://10.10.10.1:3000/rtp/225.0.0.164:6140
+#EXTINF:-1,max极速汽车
+http://10.10.10.1:3000/rtp/225.0.0.165:6140
+#EXTINF:-1,纪实科教
+http://10.10.10.1:3000/rtp/225.0.0.204:6140
+#EXTINF:-1,足球频道
+http://10.10.10.1:3000/rtp/225.0.0.205:6140
+#EXTINF:-1,茶频道
+http://10.10.10.1:3000/rtp/225.0.0.206:6140
+#EXTINF:-1,快乐垂钓
+http://10.10.10.1:3000/rtp/225.0.0.207:6140
+#EXTINF:-1,卡酷少儿
+http://10.10.10.1:3000/rtp/225.0.0.220:6140
+#EXTINF:-1,陶瓷频道
+http://10.10.10.1:3000/rtp/225.0.0.221:6140
+#EXTINF:-1,七彩戏剧
+http://10.10.10.1:3000/rtp/225.0.0.225:6140
+#EXTINF:-1,东方财经
+http://10.10.10.1:3000/rtp/225.0.0.226:6140
