@@ -425,22 +425,19 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
             "settings": { }
         },
     {
-      "tag": "stream",
+      "tag": "hhsg",
       "protocol": "socks",
-      "settings": {
-        "servers": [
-          {
-            "address": "${stream_IP}",
-            "port": ${stream_port},
-            "users": [
-              {
-                "user": "${stream_id}",
-                "pass": "${stream_password}"
-              }
-            ]
-          }
-        ]
-      }
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+    },
+    {
+      "tag": "hmus",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "","port": 2,"users": [{"user": "","pass": ""}]}]}
+    },
+    {
+      "tag": "mmtw",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "","port": 3,"users": [{"user": "","pass": ""}]}]}
     },
         {
             "protocol": "blackhole",
@@ -457,8 +454,18 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","fast.com","tudum.com","bamgrid.com"],
-                "outboundTag": "stream"
+                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
+                "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": ["geosite:hbo","geosite:primevideo","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "outboundTag": "hmus"
+            },
+            {
+                "type": "field",
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net"],
+                "outboundTag": "mmtw"
             },
             {
                 "type": "field",
@@ -510,6 +517,12 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
     "log": {
         "loglevel": "warning"
     }, 
+    "dns": {
+        "servers": [
+            "https+local://dns.adguard.com/dns-query"
+        ],
+        "queryStrategy": "UseIPv4"
+    },
     "inbounds": [
         {
             "listen": "0.0.0.0", 
@@ -519,8 +532,7 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
                 "clients": [
                     {
                         "id": "$v2uuid", 
-                        "level": 0, 
-                        "email": "a@b.com"
+                        "flow":"xtls-rprx-vision"
                     }
                 ], 
                 "decryption": "none", 
@@ -534,15 +546,17 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
                     }
                 ]
             }, 
+        "sniffing": { 
+            "destOverride": [
+                "http",
+                "tls"
+            ],
+            "enabled": true
+        },
             "streamSettings": {
                 "network": "tcp", 
                 "security": "tls", 
                 "tlsSettings": {
-                    "serverName": "$your_domain", 
-                    "alpn": [
-                        "h2", 
-                        "http/1.1"
-                    ], 
                     "certificates": [
                         {
                             "certificateFile": "/usr/local/etc/xray/cert/fullchain.cer", 
@@ -557,8 +571,68 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
         {
             "protocol": "freedom", 
             "settings": { }
+        },
+    {
+      "tag": "hhsg",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+    },
+    {
+      "tag": "hmus",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "","port": 2,"users": [{"user": "","pass": ""}]}]}
+    },
+    {
+      "tag": "mmtw",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "","port": 3,"users": [{"user": "","pass": ""}]}]}
+    },
+        {
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            },
+            "tag": "block"
         }
-    ]
+    ],
+    "routing": { 
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
+                "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": ["geosite:hbo","geosite:primevideo","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "outboundTag": "hmus"
+            },
+            {
+                "type": "field",
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net"],
+                "outboundTag": "mmtw"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads-all",
+                    "geosite:cn"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    }
 }
 EOF
 
@@ -628,22 +702,19 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
             "settings": { }
         },
     {
-      "tag": "stream",
+      "tag": "hhsg",
       "protocol": "socks",
-      "settings": {
-        "servers": [
-          {
-            "address": "${stream_IP}",
-            "port": ${stream_port},
-            "users": [
-              {
-                "user": "${stream_id}",
-                "pass": "${stream_password}"
-              }
-            ]
-          }
-        ]
-      }
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+    },
+    {
+      "tag": "hmus",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "","port": 2,"users": [{"user": "","pass": ""}]}]}
+    },
+    {
+      "tag": "mmtw",
+      "protocol": "socks",
+      "settings": {"servers": [{"address": "","port": 3,"users": [{"user": "","pass": ""}]}]}
     },
         {
             "protocol": "blackhole",
@@ -660,8 +731,18 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","fast.com","tudum.com","bamgrid.com"],
-                "outboundTag": "stream"
+                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
+                "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": ["geosite:hbo","geosite:primevideo","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "outboundTag": "hmus"
+            },
+            {
+                "type": "field",
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net"],
+                "outboundTag": "mmtw"
             },
             {
                 "type": "field",
@@ -747,7 +828,7 @@ function start_menu(){
     echo -e "\033[34m\033[01m描述：\033[0m \033[32m\033[01mxray安装脚本20211216\033[0m"
     green "======================================================="
     echo
-    green " 1. 安装 xray: vless+tcp+xtls(推荐)"
+    green " 1. 安装 xray: vless+tcp+xtls"
     green " 2. 安装 xray: vless+tcp+tls"
     green " 3. 安装 xray: vless+grpc+tls"
     echo
