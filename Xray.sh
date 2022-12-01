@@ -432,12 +432,12 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
     {
       "tag": "hmus",
       "protocol": "socks",
-      "settings": {"servers": [{"address": "","port": 2,"users": [{"user": "","pass": ""}]}]}
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
     {
       "tag": "mmtw",
       "protocol": "socks",
-      "settings": {"servers": [{"address": "","port": 3,"users": [{"user": "","pass": ""}]}]}
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
         {
             "protocol": "blackhole",
@@ -580,12 +580,12 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
     {
       "tag": "hmus",
       "protocol": "socks",
-      "settings": {"servers": [{"address": "","port": 2,"users": [{"user": "","pass": ""}]}]}
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
     {
       "tag": "mmtw",
       "protocol": "socks",
-      "settings": {"servers": [{"address": "","port": 3,"users": [{"user": "","pass": ""}]}]}
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
         {
             "protocol": "blackhole",
@@ -709,12 +709,12 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
     {
       "tag": "hmus",
       "protocol": "socks",
-      "settings": {"servers": [{"address": "","port": 2,"users": [{"user": "","pass": ""}]}]}
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
     {
       "tag": "mmtw",
       "protocol": "socks",
-      "settings": {"servers": [{"address": "","port": 3,"users": [{"user": "","pass": ""}]}]}
+      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
         {
             "protocol": "blackhole",
@@ -829,7 +829,7 @@ function start_menu(){
     green "======================================================="
     echo
     green " 1. 安装 xray: vless+tcp+xtls"
-    green " 2. 安装 xray: vless+tcp+tls"
+    green " 2. 安装 xray: vless+tcp+xtls-Vision"
     green " 3. 安装 xray: vless+grpc+tls"
     echo
     green " 4. 更新 xray"
