@@ -127,25 +127,25 @@ http://10.10.10.1:3000/rtp/225.0.0.11:6140
 http://10.10.10.1:3000/rtp/225.0.0.12:6140
 #EXTINF:-1,教育电视台
 http://10.10.10.1:3000/rtp/225.0.0.222:6140
-#EXTINF:-1,CETV1
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/cetv1.png",CETV1
 http://10.10.10.1:3000/rtp/225.0.0.66:6140
-#EXTINF:-1,CETV4
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/cetv4.png",CETV4
 http://10.10.10.1:3000/rtp/225.0.0.230:6140
 #EXTINF:-1,金鹰纪实
 http://10.10.10.1:3000/rtp/225.0.0.144:6140
-#EXTINF:-1,都市剧场
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dsjc.png",都市剧场
 http://10.10.10.1:3000/rtp/225.0.0.157:6140
 #EXTINF:-1,欢笑剧场
 http://10.10.10.1:3000/rtp/225.0.0.158:6140
 #EXTINF:-1,金色学堂
 http://10.10.10.1:3000/rtp/225.0.0.159:6140
-#EXTINF:-1,法制天地
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/fztd.png",法制天地
 http://10.10.10.1:3000/rtp/225.0.0.160:6140
-#EXTINF:-1,动漫秀场
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/dmxc.png",动漫秀场
 http://10.10.10.1:3000/rtp/225.0.0.161:6140
-#EXTINF:-1,游戏风云
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/yxfy.png",游戏风云
 http://10.10.10.1:3000/rtp/225.0.0.162:6140
-#EXTINF:-1,生活时尚
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/shss.png",生活时尚
 http://10.10.10.1:3000/rtp/225.0.0.163:6140
 #EXTINF:-1,乐游
 http://10.10.10.1:3000/rtp/225.0.0.164:6140
@@ -155,9 +155,9 @@ http://10.10.10.1:3000/rtp/225.0.0.165:6140
 http://10.10.10.1:3000/rtp/225.0.0.204:6140
 #EXTINF:-1,足球频道
 http://10.10.10.1:3000/rtp/225.0.0.205:6140
-#EXTINF:-1,茶频道
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/cpd.png",茶频道
 http://10.10.10.1:3000/rtp/225.0.0.206:6140
-#EXTINF:-1,快乐垂钓
+#EXTINF:-1 tvg-logo="http://n.ysyz.top:99/buyaolian/klcd.png",快乐垂钓
 http://10.10.10.1:3000/rtp/225.0.0.207:6140
 #EXTINF:-1,卡酷少儿
 http://10.10.10.1:3000/rtp/225.0.0.220:6140
