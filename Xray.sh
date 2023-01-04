@@ -430,11 +430,6 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
       "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
     {
-      "tag": "hmus",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
       "tag": "mmtw",
       "protocol": "socks",
       "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
@@ -454,17 +449,12 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
+                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
                 "outboundTag": "hhsg"
             },
             {
                 "type": "field",
-                "domain": ["geosite:hbo","geosite:primevideo","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "hmus"
-            },
-            {
-                "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net"],
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
             },
             {
@@ -578,11 +568,6 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
       "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
     {
-      "tag": "hmus",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
       "tag": "mmtw",
       "protocol": "socks",
       "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
@@ -602,17 +587,12 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
+                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
                 "outboundTag": "hhsg"
             },
             {
                 "type": "field",
-                "domain": ["geosite:hbo","geosite:primevideo","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "hmus"
-            },
-            {
-                "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net"],
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
             },
             {
@@ -707,11 +687,6 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
       "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
     },
     {
-      "tag": "hmus",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
       "tag": "mmtw",
       "protocol": "socks",
       "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
@@ -731,17 +706,12 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
+                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
                 "outboundTag": "hhsg"
             },
             {
                 "type": "field",
-                "domain": ["geosite:hbo","geosite:primevideo","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "hmus"
-            },
-            {
-                "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net"],
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
             },
             {
