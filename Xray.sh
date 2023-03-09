@@ -159,6 +159,148 @@ check_domain(){
     fi
 }
 
+install_nginx(){
+    green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装nginx"
+    $systemPackage install -y nginx
+    if [ ! -d "/etc/nginx" ]; then
+        red "$(date +"%Y-%m-%d %H:%M:%S") - 看起来nginx没有安装成功，请先使用脚本中的删除xray功能，然后再重新安装.\n== Install failed."
+        exit 1
+    fi
+    mkdir /etc/nginx/atrandys/
+
+cat > /etc/nginx/nginx.conf <<-EOF
+user  root;
+worker_processes  1;
+#error_log  /etc/nginx/error.log warn;
+#pid    /var/run/nginx.pid;
+events {
+    worker_connections  1024;
+}
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                      '\$status \$body_bytes_sent "\$http_referer" '
+                      '"\$http_user_agent" "\$http_x_forwarded_for"';
+    #access_log  /etc/nginx/access.log  main;
+    sendfile        on;
+    #tcp_nopush     on;
+    keepalive_timeout  120;
+    client_max_body_size 20m;
+    gzip  on;
+    include /etc/nginx/conf.d/*.conf;
+}
+EOF
+
+cat > /etc/nginx/atrandys/tcp_default.conf<<-EOF
+ server {
+    listen       127.0.0.1:37212;
+    server_name  $your_domain;
+    root /usr/share/nginx/html;
+    index index.php index.html index.htm;
+}
+ server {
+    listen       127.0.0.1:37213 http2;
+    server_name  $your_domain;
+    root /usr/share/nginx/html;
+    index index.php index.html index.htm;
+}
+    
+server { 
+    listen       0.0.0.0:80;
+    server_name  $your_domain;
+    root /usr/share/nginx/html/;
+    index index.php index.html;
+    #rewrite ^(.*)$  https://\$host\$1 permanent; 
+}
+EOF
+
+newpath=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
+cat > /etc/nginx/atrandys/ws_default.conf<<-EOF
+server {
+        listen 80;
+        server_name $your_domain;
+        rewrite ^(.*)$ https://\${server_name}\$1 permanent;
+}
+server {
+        listen 443 ssl http2 so_keepalive=on;
+        server_name $your_domain;
+        index index.html;
+        root /usr/share/nginx/html;
+        ssl_certificate /usr/local/etc/xray/cert/fullchain.cer;
+        ssl_certificate_key /usr/local/etc/xray/cert/private.key;
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+        client_header_timeout 1071906480m;
+        client_body_buffer_size 512k;
+        keepalive_timeout 1071906480m;
+        location /$your_domain {
+                if (\$content_type !~ "application/grpc") {
+                        return 404;
+                }
+                client_max_body_size 0;
+                grpc_set_header X-Real-IP \$proxy_add_x_forwarded_for;
+                client_body_timeout 1071906480m;
+                grpc_read_timeout 1071906480m;
+                grpc_pass grpc://127.0.0.1:2002;
+        }
+}
+EOF
+
+if [ "$config_type" == "tcp_xtls" ] || [ "$config_type" == "tcp_tls" ]; then
+    change_2_tcp_nginx
+    systemctl restart nginx.service
+fi
+
+if [ "$config_type" == "ws_tls" ]; then
+cat > /etc/nginx/conf.d/default.conf<<-EOF
+server { 
+    listen       80;
+    server_name  $your_domain;
+    root /usr/share/nginx/html;
+    index index.php index.html;
+    #rewrite ^(.*)$  https://\$host\$1 permanent; 
+}
+EOF
+    systemctl restart nginx.service
+fi
+    #green "$(date +"%Y-%m-%d %H:%M:%S") ==== 检测nginx配置文件"
+    #nginx -t
+    systemctl enable nginx.service
+    green "$(date +"%Y-%m-%d %H:%M:%S") - 使用acme.sh申请https证书."
+    apt update && apt install socat
+    curl https://get.acme.sh | sh
+    blue "输入cloudflare令牌:"
+    read your_Token
+    blue "输入stream的IP:"
+    read stream_IP
+    blue "输入stream的端口:"
+    read stream_port
+    blue "输入stream的用户名:"
+    read stream_id
+    blue "输入stream的密码:"
+    read stream_password
+    export CF_Token="$your_Token"
+    ~/.acme.sh/acme.sh --server letsencrypt --issue -d $your_domain --dns dns_cf
+    if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
+        green "$(date +"%Y-%m-%d %H:%M:%S") - 申请https证书成功."
+    else
+        cert_failed="1"
+        red "$(date +"%Y-%m-%d %H:%M:%S") - 申请证书失败，请尝试手动申请证书."
+    fi
+    install_xray
+}
+
+change_2_tcp_nginx(){
+    \cp /etc/nginx/atrandys/tcp_default.conf /etc/nginx/conf.d/default.conf
+    #systemctl restart nginx
+}
+
+change_2_ws_nginx(){
+    \cp /etc/nginx/atrandys/ws_default.conf /etc/nginx/conf.d/default.conf
+    #systemctl restart nginx
+}
+
 install_xray(){ 
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装xray"
     mkdir /usr/local/etc/xray/
