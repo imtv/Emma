@@ -395,7 +395,6 @@ remove_xray(){
     rm -rf /usr/local/share/xray/ /usr/local/etc/xray/
     rm -f /usr/local/bin/xray
     rm -rf /etc/systemd/system/xray*
-    rm -rf /root/.acme.sh/
     green "xray has been deleted."
 }
 
