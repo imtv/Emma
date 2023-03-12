@@ -21,7 +21,7 @@ source /etc/os-release
 RELEASE=$ID
 VERSION=$VERSION_ID
 cat >> /usr/src/atrandys.log <<-EOF
-== Script: imtv/xray/install.sh
+== Script: imtv/Emma/reality.sh
 == Time  : $(date +"%Y-%m-%d %H:%M:%S")
 == OS    : $RELEASE $VERSION
 == Kernel: $(uname -r)
@@ -54,7 +54,6 @@ check_domain(){
 install_xray(){ 
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装xray"
     mkdir /usr/local/etc/xray/
-    mkdir /usr/local/etc/xray/cert
     bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     cd /usr/local/etc/xray/
     rm -f config.json
@@ -182,29 +181,6 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
 }
 EOF
 
-cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
-{
-地址：${your_domain}
-端口：443
-id：${v2uuid}
-加密：none
-流控：xtls-rprx-direct
-传输协议：tcp
-伪装类型：none
-底层传输：xtls
-跳过证书验证：false
-连接：vless://${v2uuid}@${your_domain}:443?security=xtls&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-splice#${your_domain}
-}
-EOF
-    
-}
-change_2_tcp_xtls(){
-    echo "tcp_xtls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/tcp_xtls_config.json /usr/local/etc/xray/config.json
-    #systemctl restart xray
-
-}
-
 config_tcp_tls(){
 cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
 {
@@ -320,26 +296,6 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
 }
 EOF
 
-cat > /usr/local/etc/xray/myconfig_tcp_tls.json<<-EOF
-{
-===========配置参数=============
-地址：${your_domain}
-端口：443
-id：${v2uuid}
-加密：none
-传输协议：tcp
-伪装类型：none
-底层传输：tls
-跳过证书验证：false
-}
-EOF
-}
-change_2_tcp_tls(){
-    echo "tcp_tls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/tcp_tls_config.json /usr/local/etc/xray/config.json
-    #systemctl restart xray
-}
-
 config_ws_tls(){
 cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
 {
@@ -439,39 +395,6 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
 }
 EOF
 
-cat > /usr/local/etc/xray/myconfig_ws_tls.json<<-EOF
-{
-===========配置参数=============
-地址：${your_domain}
-端口：443
-uuid：${v2uuid}
-传输协议：grpc
-ServiceName：${your_domain}
-底层传输：tls
-链接：vless://${v2uuid}@${your_domain}:443?mode=multi&type=grpc&encryption=none&serviceName=${your_domain}&security=tls#${your_domain}
-}
-EOF
-}
-change_2_ws_tls(){
-    echo "ws_tls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/ws_tls_config.json /usr/local/etc/xray/config.json
-    #systemctl restart xray
-}
-
-get_myconfig(){
-    check_config_type=$(cat /usr/local/etc/xray/atrandys_config)
-    green "当前配置：$check_config_type"
-    if [ "$check_config_type" == "tcp_xtls" ]; then
-        cat /usr/local/etc/xray/myconfig_tcp_xtls.json
-    fi
-    if [ "$check_config_type" == "tcp_tls" ]; then
-        cat /usr/local/etc/xray/myconfig_tcp_tls.json
-    fi
-    if [ "$check_config_type" == "ws_tls" ]; then
-        cat /usr/local/etc/xray/myconfig_ws_tls.json
-    fi
-}
-
 remove_xray(){
     green "$(date +"%Y-%m-%d %H:%M:%S") - 删除xray."
     systemctl stop xray.service
@@ -495,9 +418,7 @@ function start_menu(){
     green " 3. 安装 xray: vless+grpc+tls/VLESS-GRPC-uTLS-REALITY"
     echo
     green " 4. 更新 xray"
-    green " 5. 切换配置"
-    red " 6. 删除 xray"
-    green " 7. 查看配置参数"
+    red " 5. 删除 xray"
     yellow " 0. Exit"
     echo
     read -p "输入数字:" num
@@ -522,55 +443,7 @@ function start_menu(){
     systemctl restart xray
     ;;
     5)
-        if [ -f "/usr/local/etc/xray/atrandys_config" ]; then
-            green "========================================================="
-            green "当前配置：$(cat /usr/local/etc/xray/atrandys_config)"
-            red "注意！切换配置会使自定义修改的config.json内容丢失，请知晓"
-            green "========================================================="
-            echo
-            green " 1. 切换至vless+tcp+xtls"
-            green " 2. 切换至vless+tcp+tls"
-            green " 3. 切换至vless+grpc+tls"
-            yellow " 0. 返回上级"
-            echo
-            read -p "输入数字:" num
-            case "$num" in
-            1)
-            change_2_tcp_xtls
-            systemctl restart xray
-            ;;
-            2)
-            change_2_tcp_tls
-            systemctl restart xray
-            ;;
-            3)
-            change_2_ws_tls
-            systemctl restart xray
-            ;;
-            0)
-            clear
-            start_menu
-            ;;
-            *)
-            clear
-            red "请输入正确的数字"
-            sleep 2s
-            start_menu
-            ;;
-            esac
-        else
-            red "似乎你还没有使用过本脚本安装xray，不存在相关配置"
-            sleep 2s
-            clear
-            start_menu
-        fi
-        
-    ;;
-    6)
     remove_xray 
-    ;;
-    7)
-    get_myconfig
     ;;
     0)
     exit 1
