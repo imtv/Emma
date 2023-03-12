@@ -47,6 +47,7 @@ install_xray(){
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
+}
 
 config_tcp_xtls(){
 cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
