@@ -13,21 +13,6 @@ yellow(){
     echo -e "\033[33m\033[01m$1\033[0m"
 }
 
-logcmd(){
-    eval $1 | tee -ai /var/atrandys.log
-}
-
-source /etc/os-release
-RELEASE=$ID
-VERSION=$VERSION_ID
-cat >> /usr/src/atrandys.log <<-EOF
-== Script: imtv/Emma/reality.sh
-== Time  : $(date +"%Y-%m-%d %H:%M:%S")
-== OS    : $RELEASE $VERSION
-== Kernel: $(uname -r)
-== User  : $(whoami)
-EOF
-sleep 2s
 check_domain(){
     if [ "$1" == "tcp_xtls" ]; then
         config_type="tcp_xtls"
