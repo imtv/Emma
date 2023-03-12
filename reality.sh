@@ -402,7 +402,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "[01m描述：\033[01mXRAY-REALITY安装脚本20230312\033"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230312\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: vless+tcp+xtls/VLESS-TCP-XTLS-uTLS-REALITY"
