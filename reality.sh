@@ -30,13 +30,13 @@ check_domain(){
     $systemPackage install -y wget curl unzip
     blue "输入当前服务器的IP地址:"
     read your_domain
-    blue "输入stream的IP:"
+    blue "输入流媒体解锁服务器SOCKS的IP:"
     read stream_IP
-    blue "输入stream的端口:"
+    blue "端口:"
     read stream_port
-    blue "输入stream的用户名:"
+    blue "用户名:"
     read stream_id
-    blue "输入stream的密码:"
+    blue "密码:"
     read stream_password
 }
 
