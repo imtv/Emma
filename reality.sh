@@ -389,7 +389,6 @@ remove_xray(){
     rm -rf /etc/systemd/system/xray*
     rm -rf /root/.acme.sh/
     green "xray has been deleted."
-    
 }
 
 function start_menu(){
