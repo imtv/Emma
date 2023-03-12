@@ -38,6 +38,8 @@ check_domain(){
     read stream_id
     blue "密码:"
     read stream_password
+    sleep 1s
+    install_xray
 }
 
 install_xray(){ 
