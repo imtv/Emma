@@ -27,7 +27,7 @@ check_domain(){
     if [ "$1" == "ws_tls" ]; then
         config_type="ws_tls"
     fi
-    $systemPackage install -y wget curl unzip
+    apt install -y wget curl unzip
     blue "输入当前服务器的IP地址:"
     read your_domain
     blue "输入流媒体解锁服务器SOCKS的IP:"
