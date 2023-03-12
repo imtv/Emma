@@ -17,98 +17,27 @@ logcmd(){
     eval $1 | tee -ai /var/atrandys.log
 }
 
-source /etc/os-release
-RELEASE=$ID
-VERSION=$VERSION_ID
-cat >> /usr/src/atrandys.log <<-EOF
-== Script: imtv/xray/install.sh
-== Time  : $(date +"%Y-%m-%d %H:%M:%S")
-== OS    : $RELEASE $VERSION
-== Kernel: $(uname -r)
-== User  : $(whoami)
-EOF
-sleep 2s
-check_release(){
-    green "$(date +"%Y-%m-%d %H:%M:%S") ==== 检查系统版本"
-    if [ "$RELEASE" == "centos" ]; then
-        systemPackage="yum"
-        yum install -y wget
-        if  [ "$VERSION" == "6" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持CentOS 6.\n== Install failed."
-            exit
-        fi
-        if  [ "$VERSION" == "5" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持CentOS 5.\n== Install failed."
-            exit
-        fi
-        if [ -f "/etc/selinux/config" ]; then
-            CHECK=$(grep SELINUX= /etc/selinux/config | grep -v "#")
-            if [ "$CHECK" == "SELINUX=enforcing" ]; then
-                green "$(date +"%Y-%m-%d %H:%M:%S") - SELinux状态非disabled,关闭SELinux."
-                setenforce 0
-                sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-                #loggreen "SELinux is not disabled, add port 80/443 to SELinux rules."
-                #loggreen "==== Install semanage"
-                #logcmd "yum install -y policycoreutils-python"
-                #semanage port -a -t http_port_t -p tcp 80
-                #semanage port -a -t http_port_t -p tcp 443
-                #semanage port -a -t http_port_t -p tcp 37212
-                #semanage port -a -t http_port_t -p tcp 37213
-            elif [ "$CHECK" == "SELINUX=permissive" ]; then
-                green "$(date +"%Y-%m-%d %H:%M:%S") - SELinux状态非disabled,关闭SELinux."
-                setenforce 0
-                sed -i 's/SELINUX=permissive/SELINUX=disabled/g' /etc/selinux/config
-            fi
-        fi
-        firewall_status=`firewall-cmd --state`
-        if [ "$firewall_status" == "running" ]; then
-            green "$(date +"%Y-%m-%d %H:%M:%S") - FireWalld状态非disabled,添加80/443到FireWalld rules."
-            firewall-cmd --zone=public --add-port=80/tcp --permanent
-            firewall-cmd --zone=public --add-port=443/tcp --permanent
-            firewall-cmd --reload
-        fi
-        while [ ! -f "nginx-release-centos-7-0.el7.ngx.noarch.rpm" ]
-        do
-            wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-            if [ ! -f "nginx-release-centos-7-0.el7.ngx.noarch.rpm" ]; then
-                red "$(date +"%Y-%m-%d %H:%M:%S") - 下载nginx rpm包失败，继续重试..."
-            fi
-        done
-        rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm --force --nodeps
-        #logcmd "rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm --force --nodeps"
-        #loggreen "Prepare to install nginx."
-        #yum install -y libtool perl-core zlib-devel gcc pcre* >/dev/null 2>&1
-        yum install -y epel-release
-    elif [ "$RELEASE" == "ubuntu" ]; then
-        systemPackage="apt-get"
-        if  [ "$VERSION" == "14" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持Ubuntu 14.\n== Install failed."
-            exit
-        fi
-        if  [ "$VERSION" == "12" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持Ubuntu 12.\n== Install failed."
-            exit
-        fi
-        ufw_status=`systemctl status ufw | grep "Active: active"`
-        if [ -n "$ufw_status" ]; then
-            ufw allow 80/tcp
-            ufw allow 443/tcp
-            ufw reload
-        fi
-        apt-get update >/dev/null 2>&1
-    elif [ "$RELEASE" == "debian" ]; then
-        systemPackage="apt-get"
-        ufw_status=`systemctl status ufw | grep "Active: active"`
-        if [ -n "$ufw_status" ]; then
-            ufw allow 80/tcp
-            ufw allow 443/tcp
-            ufw reload
-        fi
-        apt-get update >/dev/null 2>&1
-    else
-        red "$(date +"%Y-%m-%d %H:%M:%S") - 当前系统不被支持. \n== Install failed."
-        exit
+check_domain(){
+    if [ "$1" == "tcp_xtls" ]; then
+        config_type="tcp_xtls"
     fi
+    if [ "$1" == "tcp_tls" ]; then
+        config_type="tcp_tls"
+    fi
+    if [ "$1" == "ws_tls" ]; then
+        config_type="ws_tls"
+    fi
+    $systemPackage install -y wget curl unzip
+    blue "输入当前服务器的IP地址:"
+    read your_domain
+    blue "输入stream的IP:"
+    read stream_IP
+    blue "输入stream的端口:"
+    read stream_port
+    blue "输入stream的用户名:"
+    read stream_id
+    blue "输入stream的密码:"
+    read stream_password
 }
 
 install_xray(){ 
