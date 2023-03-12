@@ -170,6 +170,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
     }
 }
 EOF
+}
 
 config_tcp_tls(){
 cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
@@ -285,6 +286,7 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
     }
 }
 EOF
+}
 
 config_ws_tls(){
 cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
@@ -384,6 +386,7 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
     }
 }
 EOF
+}
 
 remove_xray(){
     green "$(date +"%Y-%m-%d %H:%M:%S") - 删除xray."
