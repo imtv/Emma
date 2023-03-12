@@ -415,18 +415,12 @@ function start_menu(){
     read -p "输入数字:" num
     case "$num" in
     1)
-    check_release
-    check_port
     check_domain "tcp_xtls"
     ;;
     2)
-    check_release
-    check_port
     check_domain "tcp_tls"
     ;;
     3)
-    check_release
-    check_port
     check_domain "ws_tls"
     ;;
     4)
