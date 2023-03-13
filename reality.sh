@@ -49,6 +49,21 @@ install_xray(){
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
+    config_tcp_xtls
+    config_tcp_tls
+    config_ws_tls
+    if [ "$config_type" == "tcp_xtls" ]; then      
+        change_2_tcp_xtls
+    fi
+    if [ "$config_type" == "tcp_tls" ]; then   
+        change_2_tcp_tls
+    fi
+    if [ "$config_type" == "ws_tls" ]; then  
+        change_2_ws_tls
+    fi
+    systemctl enable xray.service
+    sed -i "s/User=nobody/User=root/;" /etc/systemd/system/xray.service
+    systemctl daemon-reload
 }
 
 config_tcp_xtls(){
@@ -174,6 +189,13 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
 EOF
 }
 
+change_2_tcp_xtls(){
+    echo "tcp_xtls" > /usr/local/etc/xray/atrandys_config
+    \cp /usr/local/etc/xray/tcp_xtls_config.json /usr/local/etc/xray/config.json
+    #systemctl restart xray
+
+}
+
 config_tcp_tls(){
 cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
 {
@@ -290,6 +312,12 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
 EOF
 }
 
+change_2_tcp_tls(){
+    echo "tcp_tls" > /usr/local/etc/xray/atrandys_config
+    \cp /usr/local/etc/xray/tcp_tls_config.json /usr/local/etc/xray/config.json
+    #systemctl restart xray
+}
+
 config_ws_tls(){
 cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
 {
@@ -388,6 +416,12 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
     }
 }
 EOF
+}
+
+change_2_ws_tls(){
+    echo "ws_tls" > /usr/local/etc/xray/atrandys_config
+    \cp /usr/local/etc/xray/ws_tls_config.json /usr/local/etc/xray/config.json
+    #systemctl restart xray
 }
 
 remove_xray(){
