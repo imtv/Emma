@@ -49,7 +49,9 @@ install_xray(){
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
     shortIds=$(openssl rand -hex 8)
     local_addr=`curl ipv4.icanhazip.com`
-    xray x25519 | sed -e 's/Private key:/privateKey=/;s/Public key:/publicKey=/;s/ //g'
+    xray x25519 > key
+    privateKey=$(sed -e 's/Private key: //;q' ./key)
+    publicKey=$(sed -e '1d;s/Public key: //' ./key)
     config_tcp_xtls
     config_h2
     config_grpc
@@ -449,7 +451,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-10\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-11\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
