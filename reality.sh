@@ -142,7 +142,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                     ],
                     "privateKey": "sExZCeQDVSAfBSsjqxn3DicCbOSv5kmCUhurmIcLbnY",
                     "shortIds": [
-                        "$shortIds",
+                        "$shortIds"
                     ]
                 }
             },
@@ -198,7 +198,6 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
         ],
         "queryStrategy": "UseIPv4"
     },
-    },
     "inbounds": [
         {
             "listen": "0.0.0.0",
@@ -226,14 +225,7 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                     ],
                     "privateKey": "sExZCeQDVSAfBSsjqxn3DicCbOSv5kmCUhurmIcLbnY",
                     "shortIds": [ 
-                        "a1", 
-                        "bc19",
-                        "b2da06",
-                        "2d940fe6",
-                        "b85e293fa1",
-                        "4a9f72b5c803",
-                        "19f70b462cea5d",
-                        "6ba85179e30d4fc2"
+                        "$shortIds"
                     ]
                 }
             },
@@ -351,18 +343,11 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
                     ],
                     "privateKey": "2KZ4uouMKgI8nR-LDJNP1_MHisCJOmKGj9jUjZLncVU",
                     "shortIds": [
-                        "a1", // 0 到 f，长度为 2 的倍数，长度上限为 16，或执行 openssl rand -hex 8 生成
-                        "bc19",
-                        "b2da06",
-                        "2d940fe6",
-                        "b85e293fa1",
-                        "4a9f72b5c803",
-                        "19f70b462cea5d",
-                        "6ba85179e30d4fc2"
+                        "$shortIds"
                     ]
                 },
                 "grpcSettings": {
-                    "serviceName": "grpc" // 指定服务名称，若客户端为 Clash Meta Kernel，不能留空
+                    "serviceName": "grpc"
                 }
             },
             "sniffing": {
@@ -453,7 +438,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-6\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-7\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
