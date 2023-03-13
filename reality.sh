@@ -21,11 +21,11 @@ check_domain(){
     if [ "$1" == "tcp_xtls" ]; then
         config_type="tcp_xtls"
     fi
-    if [ "$1" == "tcp_tls" ]; then
-        config_type="tcp_tls"
+    if [ "$1" == "h2" ]; then
+        config_type="h2"
     fi
-    if [ "$1" == "ws_tls" ]; then
-        config_type="ws_tls"
+    if [ "$1" == "grpc" ]; then
+        config_type="grpc"
     fi
     apt install -y wget curl unzip
     blue "输入当前服务器的IP地址:"
@@ -38,29 +38,28 @@ check_domain(){
     read stream_id
     blue "密码:"
     read stream_password
-    sleep 1s
     install_xray
 }
 
 install_xray(){ 
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装xray"
     mkdir /usr/local/etc/xray/
-    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.0
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.0 #临时
     #bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
     config_tcp_xtls
-    config_tcp_tls
-    config_ws_tls
+    config_h2
+    config_grpc
     if [ "$config_type" == "tcp_xtls" ]; then      
         change_2_tcp_xtls
     fi
-    if [ "$config_type" == "tcp_tls" ]; then   
-        change_2_tcp_tls
+    if [ "$config_type" == "h2" ]; then   
+        change_2_h2
     fi
-    if [ "$config_type" == "ws_tls" ]; then  
-        change_2_ws_tls
+    if [ "$config_type" == "grpc" ]; then  
+        change_2_grpc
     fi
     systemctl enable xray.service
     sed -i "s/User=nobody/User=root/;" /etc/systemd/system/xray.service
@@ -72,89 +71,13 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
 {
     "log": {
         "loglevel": "warning"
-    }, 
+    },
     "dns": {
         "servers": [
             "https+local://dns.adguard.com/dns-query"
         ],
         "queryStrategy": "UseIPv4"
     },
-    "inbounds": [
-        {
-            "listen": "0.0.0.0", 
-            "port": 443, 
-            "protocol": "vless", 
-            "settings": {
-                "clients": [
-                    {
-                        "id": "$v2uuid", 
-                        "level": 0, 
-                        "email": "a@b.com",
-                        "flow":"xtls-rprx-direct"
-                    }
-                ], 
-                "decryption": "none", 
-                "fallbacks": [
-                    {
-                        "dest": 37212
-                    }, 
-                    {
-                        "alpn": "h2", 
-                        "dest": 37213
-                    }
-                ]
-            }, 
-        "sniffing": { 
-            "destOverride": [
-                "http",
-                "tls"
-            ],
-            "enabled": true
-        },
-            "streamSettings": {
-                "network": "tcp", 
-                "security": "xtls", 
-                "xtlsSettings": {
-                    "serverName": "$your_domain", 
-                    "alpn": [
-                        "h2", 
-                        "http/1.1"
-                    ], 
-                    "certificates": [
-                        {
-                            "certificateFile": "/usr/local/etc/xray/cert/fullchain.cer", 
-                            "keyFile": "/usr/local/etc/xray/cert/private.key"
-                        }
-                    ]
-                }
-            }
-        }
-    ], 
-    "outbounds": [
-        {
-            "protocol": "freedom", 
-            "settings": { }
-        },
-    {
-      "tag": "hhsg",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
-      "tag": "mmtw",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-        {
-            "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
-            },
-            "tag": "block"
-        }
-    ],
     "routing": { 
         "domainStrategy": "IPIfNonMatch",
         "rules": [
@@ -185,7 +108,82 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "outboundTag": "block"
             }
         ]
-    }
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120
+            }
+        }
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$v2uuid",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.lovelive-anime.jp:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "lovelive-anime.jp",
+                        "www.lovelive-anime.jp"
+                    ],
+                    "privateKey": "sExZCeQDVSAfBSsjqxn3DicCbOSv5kmCUhurmIcLbnY",
+                    "shortIds": [
+                        "a1",
+                        "bc19",
+                        "b2da06",
+                        "2d940fe6",
+                        "b85e293fa1",
+                        "4a9f72b5c803",
+                        "19f70b462cea5d",
+                        "6ba85179e30d4fc2"
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        },
+        {
+          "tag": "hhsg",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "mmtw",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        }
+    ]
 }
 EOF
 }
@@ -197,8 +195,8 @@ change_2_tcp_xtls(){
 
 }
 
-config_tcp_tls(){
-cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
+config_h2(){
+cat > /usr/local/etc/xray/h2_config.json<<-EOF
 {
     "log": {
         "loglevel": "warning"
@@ -313,14 +311,14 @@ cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
 EOF
 }
 
-change_2_tcp_tls(){
-    echo "tcp_tls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/tcp_tls_config.json /usr/local/etc/xray/config.json
+change_2_h2(){
+    echo "h2" > /usr/local/etc/xray/atrandys_config
+    \cp /usr/local/etc/xray/h2_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 }
 
-config_ws_tls(){
-cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
+config_grpc(){
+cat > /usr/local/etc/xray/grpc_config.json<<-EOF
 {
   "log": {
     "loglevel": "warning"
@@ -419,9 +417,9 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
 EOF
 }
 
-change_2_ws_tls(){
-    echo "ws_tls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/ws_tls_config.json /usr/local/etc/xray/config.json
+change_2_grpc(){
+    echo "grpc" > /usr/local/etc/xray/atrandys_config
+    \cp /usr/local/etc/xray/grpc_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 }
 
@@ -441,7 +439,7 @@ function start_menu(){
     echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-1\033[0m"
     green "======================================================="
     echo
-    green " 1. 安装 xray: vless+tcp+xtls/VLESS-TCP-XTLS-uTLS-REALITY"
+    green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
     green " 2. 安装 xray: vless+tcp+xtls-Vision/VLESS-H2-uTLS-REALITY"
     green " 3. 安装 xray: vless+grpc+tls/VLESS-GRPC-uTLS-REALITY"
     echo
@@ -455,10 +453,10 @@ function start_menu(){
     check_domain "tcp_xtls"
     ;;
     2)
-    check_domain "tcp_tls"
+    check_domain "h2"
     ;;
     3)
-    check_domain "ws_tls"
+    check_domain "grpc"
     ;;
     4)
     bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
