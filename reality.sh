@@ -48,6 +48,7 @@ install_xray(){
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
     shortIds=$(openssl rand -hex 8)
+    cert=$(xray x25519)
     config_tcp_xtls
     config_h2
     config_grpc
@@ -140,7 +141,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                         "lovelive-anime.jp",
                         "www.lovelive-anime.jp"
                     ],
-                    "privateKey": "sExZCeQDVSAfBSsjqxn3DicCbOSv5kmCUhurmIcLbnY",
+                    "privateKey": "$cert",
                     "shortIds": [
                         "$shortIds"
                     ]
@@ -325,7 +326,7 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
                 "clients": [
                     {
                         "id": "$v2uuid",
-                        "flow": "" // 留空
+                        "flow": ""
                     }
                 ],
                 "decryption": "none"
@@ -438,7 +439,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-7\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-8\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
