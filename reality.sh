@@ -59,9 +59,9 @@ install_xray(){
     if [ "$config_type" == "grpc" ]; then  
         change_2_grpc
     fi
-    systemctl enable xray.service
-    sed -i "s/User=nobody/User=root/;" /etc/systemd/system/xray.service
-    systemctl daemon-reload
+    systemctl enable xray
+    systemctl restart xray
+    systemctl status xray
 }
 
 config_tcp_xtls(){
@@ -434,7 +434,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-3\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-4\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
