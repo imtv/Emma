@@ -51,6 +51,7 @@ install_xray(){
     key=$(xray x25519)
     privateKey=$(sed -n 's/Private key: \(.*\)/\1/p' <<< "$key")
     publicKey=$(sed -n 's/Public key: \(.*\)/\1/p' <<< "$key")
+    shortIds=("$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 6)")
     config_tcp_xtls
     config_h2
     config_grpc
@@ -146,12 +147,10 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                     ],
                     "privateKey": "$privateKey", //$publicKey
                     "shortIds": [
-                        "$(openssl rand -hex 6)",
-                        "$(openssl rand -hex 6)",
-                        "$(openssl rand -hex 6)",
-                        "$(openssl rand -hex 8)",
-                        "$(openssl rand -hex 8)",
-                        "$(openssl rand -hex 8)"
+                        "${shortIds[0]}",
+                        "${shortIds[1]}",
+                        "${shortIds[2]}",
+                        "${shortIds[3]}"
                     ]
                 }
             },
