@@ -59,7 +59,6 @@ install_xray(){
     if [ "$config_type" == "grpc" ]; then  
         change_2_grpc
     fi
-    systemctl enable xray
     systemctl restart xray
     systemctl status xray
 }
