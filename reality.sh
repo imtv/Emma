@@ -529,7 +529,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-15\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-16\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
@@ -538,6 +538,7 @@ function start_menu(){
     echo
     green " 4. 更新 xray"
     red " 5. 删除 xray"
+    green " 6. 查看配置参数"
     yellow " 0. Exit"
     echo
     read -p "输入数字:" num
@@ -557,6 +558,9 @@ function start_menu(){
     ;;
     5)
     remove_xray 
+    ;;
+    6)
+    get_myconfig
     ;;
     0)
     exit 1
