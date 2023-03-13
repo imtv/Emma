@@ -45,7 +45,8 @@ check_domain(){
 install_xray(){ 
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装xray"
     mkdir /usr/local/etc/xray/
-    bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.0
+    #bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
