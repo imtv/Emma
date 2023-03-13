@@ -528,7 +528,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-17\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-18\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
@@ -536,8 +536,9 @@ function start_menu(){
     green " 3. 安装 xray: VLESS-GRPC-uTLS-REALITY"
     echo
     green " 4. 更新 xray"
-    red " 5. 删除 xray"
-    green " 6. 查看配置参数"
+    green " 5. 切换配置"
+    red " 6. 删除 xray"
+    green " 7. 查看配置参数"
     yellow " 0. Exit"
     echo
     read -p "输入数字:" num
@@ -555,10 +556,56 @@ function start_menu(){
     bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     systemctl restart xray
     ;;
+
     5)
+        if [ -f "/usr/local/etc/xray/xray_config" ]; then
+            green "========================================================="
+            green "当前配置：$(cat /usr/local/etc/xray/xray_config)"
+            green "========================================================="
+            echo
+            green " 1. 切换至VLESS-TCP-XTLS-uTLS-REALITY"
+            green " 2. 切换至VLESS-H2-uTLS-REALITY"
+            green " 3. 切换至VLESS-GRPC-uTLS-REALITY"
+            yellow " 0. 返回上级"
+            echo
+            read -p "输入数字:" num
+            case "$num" in
+            1)
+            change_2_tcp_xtls
+            systemctl restart xray
+            ;;
+            2)
+            change_2_h2
+            systemctl restart xray
+            ;;
+            3)
+            change_2_grpc
+            systemctl restart xray
+            ;;
+            0)
+            clear
+            start_menu
+            ;;
+            *)
+            clear
+            red "请输入正确的数字"
+            sleep 2s
+            start_menu
+            ;;
+            esac
+        else
+            red "似乎你还没有使用过本脚本安装xray，不存在相关配置"
+            sleep 5s
+            clear
+            start_menu
+        fi
+        
+    ;;
+
+    6)
     remove_xray 
     ;;
-    6)
+    7)
     get_myconfig
     ;;
     0)
