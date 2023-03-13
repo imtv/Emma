@@ -197,18 +197,19 @@ EOF
 
 cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
 {
-地址：${local_addr}
-端口：443
-id：${v2uuid}
-流控：xtls-rprx-direct
-传输协议：tcp
+ip  ：${local_addr}
+port：443
+id  ：${v2uuid}
+flow：xtls-rprx-direct
+network   ：tcp
 privateKey：${privateKey}
-publicKey：${publicKey}
-shortIds："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+publicKey ：${publicKey}
+shortIds  ："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
 }
 EOF
     
 }
+
 change_2_tcp_xtls(){
     echo "tcp_xtls" > /usr/local/etc/xray/atrandys_config
     \cp /usr/local/etc/xray/tcp_xtls_config.json /usr/local/etc/xray/config.json
@@ -335,6 +336,20 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
     ]
 }
 EOF
+
+cat > /usr/local/etc/xray/myconfig_h2.json<<-EOF
+{
+ip  ：${local_addr}
+port：443
+id  ：${v2uuid}
+flow：
+network   ：h2
+privateKey：${privateKey}
+publicKey ：${publicKey}
+shortIds  ："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+}
+EOF
+    
 }
 
 change_2_h2(){
@@ -465,6 +480,20 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
     ]
 }
 EOF
+
+cat > /usr/local/etc/xray/myconfig_grpc.json<<-EOF
+{
+ip  ：${local_addr}
+port：443
+id  ：${v2uuid}
+flow：
+network   ：grpc
+privateKey：${privateKey}
+publicKey ：${publicKey}
+shortIds  ："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+}
+EOF
+
 }
 
 change_2_grpc(){
@@ -500,7 +529,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-14\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-15\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
