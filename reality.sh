@@ -440,8 +440,8 @@ function start_menu(){
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
-    green " 2. 安装 xray: vless+tcp+xtls-Vision/VLESS-H2-uTLS-REALITY"
-    green " 3. 安装 xray: vless+grpc+tls/VLESS-GRPC-uTLS-REALITY"
+    green " 2. 安装 xray: VLESS-H2-uTLS-REALITY"
+    green " 3. 安装 xray: VLESS-GRPC-uTLS-REALITY"
     echo
     green " 4. 更新 xray"
     red " 5. 删除 xray"
