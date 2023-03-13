@@ -14,7 +14,7 @@ yellow(){
 }
 
 logcmd(){
-    eval $1 | tee -ai /var/atrandys.log
+    eval $1 | tee -ai /var/xray.log
 }
 
 start_install(){
@@ -211,7 +211,7 @@ EOF
 }
 
 change_2_tcp_xtls(){
-    echo "tcp_xtls" > /usr/local/etc/xray/atrandys_config
+    echo "tcp_xtls" > /usr/local/etc/xray/xray_config
     \cp /usr/local/etc/xray/tcp_xtls_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 
@@ -353,7 +353,7 @@ EOF
 }
 
 change_2_h2(){
-    echo "h2" > /usr/local/etc/xray/atrandys_config
+    echo "h2" > /usr/local/etc/xray/xray_config
     \cp /usr/local/etc/xray/h2_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 }
@@ -497,13 +497,13 @@ EOF
 }
 
 change_2_grpc(){
-    echo "grpc" > /usr/local/etc/xray/atrandys_config
+    echo "grpc" > /usr/local/etc/xray/xray_config
     \cp /usr/local/etc/xray/grpc_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 }
 
 get_myconfig(){
-    check_config_type=$(cat /usr/local/etc/xray/atrandys_config)
+    check_config_type=$(cat /usr/local/etc/xray/xray_config)
     green "当前配置：$check_config_type"
     if [ "$check_config_type" == "tcp_xtls" ]; then
         cat /usr/local/etc/xray/myconfig_tcp_xtls.json
