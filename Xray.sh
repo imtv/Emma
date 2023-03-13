@@ -14,334 +14,57 @@ yellow(){
 }
 
 logcmd(){
-    eval $1 | tee -ai /var/atrandys.log
+    eval $1 | tee -ai /var/xray.log
 }
 
-source /etc/os-release
-RELEASE=$ID
-VERSION=$VERSION_ID
-cat >> /usr/src/atrandys.log <<-EOF
-== Script: imtv/xray/install.sh
-== Time  : $(date +"%Y-%m-%d %H:%M:%S")
-== OS    : $RELEASE $VERSION
-== Kernel: $(uname -r)
-== User  : $(whoami)
-EOF
-sleep 2s
-check_release(){
-    green "$(date +"%Y-%m-%d %H:%M:%S") ==== 检查系统版本"
-    if [ "$RELEASE" == "centos" ]; then
-        systemPackage="yum"
-        yum install -y wget
-        if  [ "$VERSION" == "6" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持CentOS 6.\n== Install failed."
-            exit
-        fi
-        if  [ "$VERSION" == "5" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持CentOS 5.\n== Install failed."
-            exit
-        fi
-        if [ -f "/etc/selinux/config" ]; then
-            CHECK=$(grep SELINUX= /etc/selinux/config | grep -v "#")
-            if [ "$CHECK" == "SELINUX=enforcing" ]; then
-                green "$(date +"%Y-%m-%d %H:%M:%S") - SELinux状态非disabled,关闭SELinux."
-                setenforce 0
-                sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-                #loggreen "SELinux is not disabled, add port 80/443 to SELinux rules."
-                #loggreen "==== Install semanage"
-                #logcmd "yum install -y policycoreutils-python"
-                #semanage port -a -t http_port_t -p tcp 80
-                #semanage port -a -t http_port_t -p tcp 443
-                #semanage port -a -t http_port_t -p tcp 37212
-                #semanage port -a -t http_port_t -p tcp 37213
-            elif [ "$CHECK" == "SELINUX=permissive" ]; then
-                green "$(date +"%Y-%m-%d %H:%M:%S") - SELinux状态非disabled,关闭SELinux."
-                setenforce 0
-                sed -i 's/SELINUX=permissive/SELINUX=disabled/g' /etc/selinux/config
-            fi
-        fi
-        firewall_status=`firewall-cmd --state`
-        if [ "$firewall_status" == "running" ]; then
-            green "$(date +"%Y-%m-%d %H:%M:%S") - FireWalld状态非disabled,添加80/443到FireWalld rules."
-            firewall-cmd --zone=public --add-port=80/tcp --permanent
-            firewall-cmd --zone=public --add-port=443/tcp --permanent
-            firewall-cmd --reload
-        fi
-        while [ ! -f "nginx-release-centos-7-0.el7.ngx.noarch.rpm" ]
-        do
-            wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-            if [ ! -f "nginx-release-centos-7-0.el7.ngx.noarch.rpm" ]; then
-                red "$(date +"%Y-%m-%d %H:%M:%S") - 下载nginx rpm包失败，继续重试..."
-            fi
-        done
-        rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm --force --nodeps
-        #logcmd "rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm --force --nodeps"
-        #loggreen "Prepare to install nginx."
-        #yum install -y libtool perl-core zlib-devel gcc pcre* >/dev/null 2>&1
-        yum install -y epel-release
-    elif [ "$RELEASE" == "ubuntu" ]; then
-        systemPackage="apt-get"
-        if  [ "$VERSION" == "14" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持Ubuntu 14.\n== Install failed."
-            exit
-        fi
-        if  [ "$VERSION" == "12" ] ;then
-            red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持Ubuntu 12.\n== Install failed."
-            exit
-        fi
-        ufw_status=`systemctl status ufw | grep "Active: active"`
-        if [ -n "$ufw_status" ]; then
-            ufw allow 80/tcp
-            ufw allow 443/tcp
-            ufw reload
-        fi
-        apt-get update >/dev/null 2>&1
-    elif [ "$RELEASE" == "debian" ]; then
-        systemPackage="apt-get"
-        ufw_status=`systemctl status ufw | grep "Active: active"`
-        if [ -n "$ufw_status" ]; then
-            ufw allow 80/tcp
-            ufw allow 443/tcp
-            ufw reload
-        fi
-        apt-get update >/dev/null 2>&1
-    else
-        red "$(date +"%Y-%m-%d %H:%M:%S") - 当前系统不被支持. \n== Install failed."
-        exit
-    fi
-}
-
-check_port(){
-    green "$(date +"%Y-%m-%d %H:%M:%S") ==== 检查端口"
-    $systemPackage -y install net-tools
-    Port80=`netstat -tlpn | awk -F '[: ]+' '$1=="tcp"{print $5}' | grep -w 80`
-    Port443=`netstat -tlpn | awk -F '[: ]+' '$1=="tcp"{print $5}' | grep -w 443`
-    if [ -n "$Port80" ]; then
-        process80=`netstat -tlpn | awk -F '[: ]+' '$5=="80"{print $9}'`
-        red "$(date +"%Y-%m-%d %H:%M:%S") - 80端口被占用,占用进程:${process80}\n== Install failed."
-        exit 1
-    fi
-    if [ -n "$Port443" ]; then
-        process443=`netstat -tlpn | awk -F '[: ]+' '$5=="443"{print $9}'`
-        red "$(date +"%Y-%m-%d %H:%M:%S") - 443端口被占用,占用进程:${process443}.\n== Install failed."
-        exit 1
-    fi
-}
-
-check_domain(){
+start_install(){
     if [ "$1" == "tcp_xtls" ]; then
         config_type="tcp_xtls"
     fi
-    if [ "$1" == "tcp_tls" ]; then
-        config_type="tcp_tls"
+    if [ "$1" == "h2" ]; then
+        config_type="h2"
     fi
-    if [ "$1" == "ws_tls" ]; then
-        config_type="ws_tls"
+    if [ "$1" == "grpc" ]; then
+        config_type="grpc"
     fi
-    $systemPackage install -y wget curl unzip
-    blue "输入解析到当前服务器的域名:"
-    read your_domain
-    real_addr=`ping ${your_domain} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
-    local_addr=`curl ipv4.icanhazip.com`
-    if [ $real_addr == $local_addr ] ; then
-        green "域名解析地址与服务器IP地址匹配."
-        install_nginx
-    else
-        red "域名解析地址与服务器IP地址不匹配."
-        read -p "强制安装?请输入 [Y/n] :" yn
-        [ -z "${yn}" ] && yn="y"
-        if [[ $yn == [Yy] ]]; then
-            sleep 1s
-            install_nginx
-        else
-            exit 1
-        fi
-    fi
-}
-
-install_nginx(){
-    green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装nginx"
-    $systemPackage install -y nginx
-    if [ ! -d "/etc/nginx" ]; then
-        red "$(date +"%Y-%m-%d %H:%M:%S") - 看起来nginx没有安装成功，请先使用脚本中的删除xray功能，然后再重新安装.\n== Install failed."
-        exit 1
-    fi
-    mkdir /etc/nginx/atrandys/
-
-cat > /etc/nginx/nginx.conf <<-EOF
-user  root;
-worker_processes  1;
-#error_log  /etc/nginx/error.log warn;
-#pid    /var/run/nginx.pid;
-events {
-    worker_connections  1024;
-}
-http {
-    include       /etc/nginx/mime.types;
-    default_type  application/octet-stream;
-    log_format  main  '\$remote_addr - \$remote_user [\$time_local] "\$request" '
-                      '\$status \$body_bytes_sent "\$http_referer" '
-                      '"\$http_user_agent" "\$http_x_forwarded_for"';
-    #access_log  /etc/nginx/access.log  main;
-    sendfile        on;
-    #tcp_nopush     on;
-    keepalive_timeout  120;
-    client_max_body_size 20m;
-    gzip  on;
-    include /etc/nginx/conf.d/*.conf;
-}
-EOF
-
-cat > /etc/nginx/atrandys/tcp_default.conf<<-EOF
- server {
-    listen       127.0.0.1:37212;
-    server_name  $your_domain;
-    root /usr/share/nginx/html;
-    index index.php index.html index.htm;
-}
- server {
-    listen       127.0.0.1:37213 http2;
-    server_name  $your_domain;
-    root /usr/share/nginx/html;
-    index index.php index.html index.htm;
-}
-    
-server { 
-    listen       0.0.0.0:80;
-    server_name  $your_domain;
-    root /usr/share/nginx/html/;
-    index index.php index.html;
-    #rewrite ^(.*)$  https://\$host\$1 permanent; 
-}
-EOF
-
-newpath=$(cat /dev/urandom | head -1 | md5sum | head -c 4)
-cat > /etc/nginx/atrandys/ws_default.conf<<-EOF
-server {
-        listen 80;
-        server_name $your_domain;
-        rewrite ^(.*)$ https://\${server_name}\$1 permanent;
-}
-server {
-        listen 443 ssl http2 so_keepalive=on;
-        server_name $your_domain;
-        index index.html;
-        root /usr/share/nginx/html;
-        ssl_certificate /usr/local/etc/xray/cert/fullchain.cer;
-        ssl_certificate_key /usr/local/etc/xray/cert/private.key;
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
-        client_header_timeout 1071906480m;
-        client_body_buffer_size 512k;
-        keepalive_timeout 1071906480m;
-        location /$your_domain {
-                if (\$content_type !~ "application/grpc") {
-                        return 404;
-                }
-                client_max_body_size 0;
-                grpc_set_header X-Real-IP \$proxy_add_x_forwarded_for;
-                client_body_timeout 1071906480m;
-                grpc_read_timeout 1071906480m;
-                grpc_pass grpc://127.0.0.1:2002;
-        }
-}
-EOF
-
-if [ "$config_type" == "tcp_xtls" ] || [ "$config_type" == "tcp_tls" ]; then
-    change_2_tcp_nginx
-    systemctl restart nginx.service
-fi
-
-if [ "$config_type" == "ws_tls" ]; then
-cat > /etc/nginx/conf.d/default.conf<<-EOF
-server { 
-    listen       80;
-    server_name  $your_domain;
-    root /usr/share/nginx/html;
-    index index.php index.html;
-    #rewrite ^(.*)$  https://\$host\$1 permanent; 
-}
-EOF
-    systemctl restart nginx.service
-fi
-    #green "$(date +"%Y-%m-%d %H:%M:%S") ==== 检测nginx配置文件"
-    #nginx -t
-    systemctl enable nginx.service
-    green "$(date +"%Y-%m-%d %H:%M:%S") - 使用acme.sh申请https证书."
-    apt update && apt install socat
-    curl https://get.acme.sh | sh
-    blue "输入cloudflare令牌:"
-    read your_Token
-    blue "输入stream的IP:"
+    apt install -y wget curl unzip
+    blue "输入流媒体解锁服务器SOCKS的IP:"
     read stream_IP
-    blue "输入stream的端口:"
+    blue "端口:"
     read stream_port
-    blue "输入stream的用户名:"
+    blue "用户名:"
     read stream_id
-    blue "输入stream的密码:"
+    blue "密码:"
     read stream_password
-    export CF_Token="$your_Token"
-    ~/.acme.sh/acme.sh --server letsencrypt --issue -d $your_domain --dns dns_cf
-    if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
-        green "$(date +"%Y-%m-%d %H:%M:%S") - 申请https证书成功."
-    else
-        cert_failed="1"
-        red "$(date +"%Y-%m-%d %H:%M:%S") - 申请证书失败，请尝试手动申请证书."
-    fi
     install_xray
-}
-
-change_2_tcp_nginx(){
-    \cp /etc/nginx/atrandys/tcp_default.conf /etc/nginx/conf.d/default.conf
-    #systemctl restart nginx
-}
-
-change_2_ws_nginx(){
-    \cp /etc/nginx/atrandys/ws_default.conf /etc/nginx/conf.d/default.conf
-    #systemctl restart nginx
 }
 
 install_xray(){ 
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装xray"
     mkdir /usr/local/etc/xray/
-    mkdir /usr/local/etc/xray/cert
-    bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
+    bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 1.8.0 #临时
+    #bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
-    if [ -d "/usr/share/nginx/html/" ]; then
-        cd /usr/share/nginx/html/ && rm -f ./*
-        wget https://github.com/atrandys/trojan/raw/master/fakesite.zip
-        unzip -o fakesite.zip
-    fi
+    local_addr=`curl ipv4.icanhazip.com`
+    key=$(xray x25519)
+    privateKey=$(sed -n 's/Private key: \(.*\)/\1/p' <<< "$key")
+    publicKey=$(sed -n 's/Public key: \(.*\)/\1/p' <<< "$key")
+    shortIds=("$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 8)" "$(openssl rand -hex 8)" "$(openssl rand -hex 8)")
     config_tcp_xtls
-    config_tcp_tls
-    config_ws_tls
+    config_h2
+    config_grpc
     if [ "$config_type" == "tcp_xtls" ]; then      
         change_2_tcp_xtls
     fi
-    if [ "$config_type" == "tcp_tls" ]; then   
-        change_2_tcp_tls
+    if [ "$config_type" == "h2" ]; then   
+        change_2_h2
     fi
-    if [ "$config_type" == "ws_tls" ]; then  
-        change_2_ws_tls
-        change_2_ws_nginx
+    if [ "$config_type" == "grpc" ]; then  
+        change_2_grpc
     fi
-    systemctl enable xray.service
-    sed -i "s/User=nobody/User=root/;" /etc/systemd/system/xray.service
-    systemctl daemon-reload
-    ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
-        --key-file   /usr/local/etc/xray/cert/private.key \
-        --fullchain-file  /usr/local/etc/xray/cert/fullchain.cer \
-        --reloadcmd  "chmod -R 700 /usr/local/etc/xray/cert && systemctl restart xray.service"
-    systemctl restart nginx
-    green "== 安装完成."
-    if [ "$cert_failed" == "1" ]; then
-        green "======nginx信息======"
-        red "申请证书失败，请尝试手动申请证书."
-    fi    
-    #green "==xray客户端配置文件存放路径=="
-    #green "/usr/local/etc/xray/client.json"
+    systemctl restart xray
     echo
     echo
     green "==xray配置参数=="
@@ -349,8 +72,7 @@ install_xray(){
     echo
     echo
     green "本次安装检测信息如下，如nginx与xray正常启动，表示安装正常："
-    ps -aux | grep -e nginx -e xray
-    
+    ps -aux | grep -e xray
 }
 
 config_tcp_xtls(){
@@ -358,89 +80,13 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
 {
     "log": {
         "loglevel": "warning"
-    }, 
+    },
     "dns": {
         "servers": [
             "https+local://dns.adguard.com/dns-query"
         ],
         "queryStrategy": "UseIPv4"
     },
-    "inbounds": [
-        {
-            "listen": "0.0.0.0", 
-            "port": 443, 
-            "protocol": "vless", 
-            "settings": {
-                "clients": [
-                    {
-                        "id": "$v2uuid", 
-                        "level": 0, 
-                        "email": "a@b.com",
-                        "flow":"xtls-rprx-direct"
-                    }
-                ], 
-                "decryption": "none", 
-                "fallbacks": [
-                    {
-                        "dest": 37212
-                    }, 
-                    {
-                        "alpn": "h2", 
-                        "dest": 37213
-                    }
-                ]
-            }, 
-        "sniffing": { 
-            "destOverride": [
-                "http",
-                "tls"
-            ],
-            "enabled": true
-        },
-            "streamSettings": {
-                "network": "tcp", 
-                "security": "xtls", 
-                "xtlsSettings": {
-                    "serverName": "$your_domain", 
-                    "alpn": [
-                        "h2", 
-                        "http/1.1"
-                    ], 
-                    "certificates": [
-                        {
-                            "certificateFile": "/usr/local/etc/xray/cert/fullchain.cer", 
-                            "keyFile": "/usr/local/etc/xray/cert/private.key"
-                        }
-                    ]
-                }
-            }
-        }
-    ], 
-    "outbounds": [
-        {
-            "protocol": "freedom", 
-            "settings": { }
-        },
-    {
-      "tag": "hhsg",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
-      "tag": "mmtw",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-        {
-            "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
-            },
-            "tag": "block"
-        }
-    ],
     "routing": { 
         "domainStrategy": "IPIfNonMatch",
         "rules": [
@@ -458,7 +104,8 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "type": "field",
                 "domain": [
                     "geosite:category-ads-all",
-                    "geosite:cn"
+                    "geosite:cn",
+                    "geosite:private"
                 ],
                 "outboundTag": "block"
             },
@@ -471,233 +118,258 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "outboundTag": "block"
             }
         ]
-    }
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120
+            }
+        }
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$v2uuid",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.lovelive-anime.jp:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "lovelive-anime.jp",
+                        "www.lovelive-anime.jp"
+                    ],
+                    "privateKey": "$privateKey", //$publicKey
+                    "shortIds": [
+                        "${shortIds[0]}",
+                        "${shortIds[1]}",
+                        "${shortIds[2]}",
+                        "${shortIds[3]}",
+                        "${shortIds[4]}",
+                        "${shortIds[5]}"
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        },
+        {
+          "tag": "hhsg",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "mmtw",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        }
+    ]
 }
 EOF
 
 cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
 {
-地址：${your_domain}
-端口：443
-id：${v2uuid}
-加密：none
-流控：xtls-rprx-direct
-传输协议：tcp
-伪装类型：none
-底层传输：xtls
-跳过证书验证：false
-连接：vless://${v2uuid}@${your_domain}:443?security=xtls&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-splice#${your_domain}
+ip  ：${local_addr}
+port：443
+id  ：${v2uuid}
+flow：xtls-rprx-direct
+network   ：tcp
+privateKey：${privateKey}
+publicKey ：${publicKey}
+shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
     
 }
+
 change_2_tcp_xtls(){
-    echo "tcp_xtls" > /usr/local/etc/xray/atrandys_config
+    echo "tcp_xtls" > /usr/local/etc/xray/xray_config
     \cp /usr/local/etc/xray/tcp_xtls_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 
 }
 
-config_tcp_tls(){
-cat > /usr/local/etc/xray/tcp_tls_config.json<<-EOF
+config_h2(){
+cat > /usr/local/etc/xray/h2_config.json<<-EOF
 {
     "log": {
         "loglevel": "warning"
-    }, 
+    },
     "dns": {
         "servers": [
             "https+local://dns.adguard.com/dns-query"
         ],
         "queryStrategy": "UseIPv4"
+    },
+    "routing": { 
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
+                "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "outboundTag": "mmtw"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads-all",
+                    "geosite:cn",
+                    "geosite:private"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120
+            }
+        }
     },
     "inbounds": [
         {
-            "listen": "0.0.0.0", 
-            "port": 443, 
-            "protocol": "vless", 
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
             "settings": {
                 "clients": [
                     {
-                        "id": "$v2uuid", 
-                        "flow":"xtls-rprx-vision"
+                        "id": "$v2uuid",
+                        "flow": ""
                     }
-                ], 
-                "decryption": "none", 
-                "fallbacks": [
-                    {
-                        "dest": 37212
-                    }, 
-                    {
-                        "alpn": "h2", 
-                        "dest": 37213
-                    }
-                ]
-            }, 
-        "sniffing": { 
-            "destOverride": [
-                "http",
-                "tls"
-            ],
-            "enabled": true
-        },
+                ],
+                "decryption": "none"
+            },
             "streamSettings": {
-                "network": "tcp", 
-                "security": "tls", 
-                "tlsSettings": {
-                    "certificates": [
-                        {
-                            "certificateFile": "/usr/local/etc/xray/cert/fullchain.cer", 
-                            "keyFile": "/usr/local/etc/xray/cert/private.key"
-                        }
+                "network": "h2",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.lovelive-anime.jp:443", 
+                    "xver": 0,
+                    "serverNames": [ 
+                        "lovelive-anime.jp", 
+                        "www.lovelive-anime.jp"
+                    ],
+                    "privateKey": "$privateKey", //$publicKey
+                    "shortIds": [ 
+                        "${shortIds[0]}",
+                        "${shortIds[1]}",
+                        "${shortIds[2]}",
+                        "${shortIds[3]}",
+                        "${shortIds[4]}",
+                        "${shortIds[5]}"
                     ]
                 }
-            }
-        }
-    ], 
-    "outbounds": [
-        {
-            "protocol": "freedom", 
-            "settings": { }
-        },
-    {
-      "tag": "hhsg",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
-      "tag": "mmtw",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-        {
-            "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
             },
-            "tag": "block"
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
         }
     ],
-    "routing": { 
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
-            {
-                "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
-                "outboundTag": "hhsg"
-            },
-            {
-                "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "mmtw"
-            },
-            {
-                "type": "field",
-                "domain": [
-                    "geosite:category-ads-all",
-                    "geosite:cn"
-                ],
-                "outboundTag": "block"
-            },
-            {
-                "type": "field",
-                "ip": [
-                    "geoip:cn",
-                    "geoip:private"
-                ],
-                "outboundTag": "block"
-            }
-        ]
-    }
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        },
+        {
+          "tag": "hhsg",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "mmtw",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        }
+    ]
 }
 EOF
 
-cat > /usr/local/etc/xray/myconfig_tcp_tls.json<<-EOF
+cat > /usr/local/etc/xray/myconfig_h2.json<<-EOF
 {
-===========配置参数=============
-地址：${your_domain}
-端口：443
-id：${v2uuid}
-加密：none
-传输协议：tcp
-伪装类型：none
-底层传输：tls
-跳过证书验证：false
+ip  ：${local_addr}
+port：443
+id  ：${v2uuid}
+flow：
+network   ：h2
+privateKey：${privateKey}
+publicKey ：${publicKey}
+shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
+    
 }
-change_2_tcp_tls(){
-    echo "tcp_tls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/tcp_tls_config.json /usr/local/etc/xray/config.json
+
+change_2_h2(){
+    echo "h2" > /usr/local/etc/xray/xray_config
+    \cp /usr/local/etc/xray/h2_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 }
 
-config_ws_tls(){
-cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
+config_grpc(){
+cat > /usr/local/etc/xray/grpc_config.json<<-EOF
 {
-  "log": {
-    "loglevel": "warning"
-  },
+    "log": {
+        "loglevel": "warning"
+    },
     "dns": {
         "servers": [
             "https+local://dns.adguard.com/dns-query"
         ],
         "queryStrategy": "UseIPv4"
     },
-  "inbounds": [
-    {
-      "port": 2002,
-      "listen": "127.0.0.1",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "$v2uuid"
-          }
-        ],
-        "decryption": "none"
-      },
-        "sniffing": { 
-            "destOverride": [
-                "http",
-                "tls"
-            ],
-            "enabled": true
-        },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "$your_domain"
-        }
-      }
-    }
-  ],
-    "outbounds": [
-        {
-            "protocol": "freedom", 
-            "settings": { }
-        },
-    {
-      "tag": "hhsg",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
-      "tag": "mmtw",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-        {
-            "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
-            },
-            "tag": "block"
-        }
-    ],
     "routing": { 
         "domainStrategy": "IPIfNonMatch",
         "rules": [
@@ -715,7 +387,8 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
                 "type": "field",
                 "domain": [
                     "geosite:category-ads-all",
-                    "geosite:cn"
+                    "geosite:cn",
+                    "geosite:private"
                 ],
                 "outboundTag": "block"
             },
@@ -728,40 +401,118 @@ cat > /usr/local/etc/xray/ws_tls_config.json<<-EOF
                 "outboundTag": "block"
             }
         ]
-    }
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120
+            }
+        }
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$v2uuid",
+                        "flow": ""
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.lovelive-anime.jp:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "lovelive-anime.jp",
+                        "www.lovelive-anime.jp"
+                    ],
+                    "privateKey": "$privateKey", //$publicKey
+                    "shortIds": [
+                        "${shortIds[0]}",
+                        "${shortIds[1]}",
+                        "${shortIds[2]}",
+                        "${shortIds[3]}",
+                        "${shortIds[4]}",
+                        "${shortIds[5]}"
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "grpc"
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        },
+        {
+          "tag": "hhsg",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "mmtw",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        }
+    ]
 }
 EOF
 
-cat > /usr/local/etc/xray/myconfig_ws_tls.json<<-EOF
+cat > /usr/local/etc/xray/myconfig_grpc.json<<-EOF
 {
-===========配置参数=============
-地址：${your_domain}
-端口：443
-uuid：${v2uuid}
-传输协议：grpc
-ServiceName：${your_domain}
-底层传输：tls
-链接：vless://${v2uuid}@${your_domain}:443?mode=multi&type=grpc&encryption=none&serviceName=${your_domain}&security=tls#${your_domain}
+ip  ：${local_addr}
+port：443
+id  ：${v2uuid}
+flow：
+network   ：grpc
+privateKey：${privateKey}
+publicKey ：${publicKey}
+shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
+
 }
-change_2_ws_tls(){
-    echo "ws_tls" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/ws_tls_config.json /usr/local/etc/xray/config.json
+
+change_2_grpc(){
+    echo "grpc" > /usr/local/etc/xray/xray_config
+    \cp /usr/local/etc/xray/grpc_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
 }
 
 get_myconfig(){
-    check_config_type=$(cat /usr/local/etc/xray/atrandys_config)
+    check_config_type=$(cat /usr/local/etc/xray/xray_config)
     green "当前配置：$check_config_type"
     if [ "$check_config_type" == "tcp_xtls" ]; then
         cat /usr/local/etc/xray/myconfig_tcp_xtls.json
     fi
-    if [ "$check_config_type" == "tcp_tls" ]; then
-        cat /usr/local/etc/xray/myconfig_tcp_tls.json
+    if [ "$check_config_type" == "h2" ]; then
+        cat /usr/local/etc/xray/myconfig_h2.json
     fi
-    if [ "$check_config_type" == "ws_tls" ]; then
-        cat /usr/local/etc/xray/myconfig_ws_tls.json
+    if [ "$check_config_type" == "grpc" ]; then
+        cat /usr/local/etc/xray/myconfig_grpc.json
     fi
 }
 
@@ -769,35 +520,20 @@ remove_xray(){
     green "$(date +"%Y-%m-%d %H:%M:%S") - 删除xray."
     systemctl stop xray.service
     systemctl disable xray.service
-    systemctl stop nginx
-    systemctl disable nginx
-    if [ "$RELEASE" == "centos" ]; then
-        yum remove -y nginx
-    else
-        apt-get -y autoremove nginx
-        apt-get -y --purge remove nginx
-        apt-get -y autoremove && apt-get -y autoclean
-        find / | grep nginx | sudo xargs rm -rf
-    fi
     rm -rf /usr/local/share/xray/ /usr/local/etc/xray/
     rm -f /usr/local/bin/xray
     rm -rf /etc/systemd/system/xray*
-    rm -rf /etc/nginx
-    rm -rf /usr/share/nginx/html/*
-    rm -rf /root/.acme.sh/
-    green "nginx & xray has been deleted."
-    
+    green "xray has been deleted."
 }
 
 function start_menu(){
-    clear
     green "======================================================="
-    echo -e "\033[34m\033[01m描述：\033[0m \033[32m\033[01mxray安装脚本20211216\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-18\033[0m"
     green "======================================================="
     echo
-    green " 1. 安装 xray: vless+tcp+xtls"
-    green " 2. 安装 xray: vless+tcp+xtls-Vision"
-    green " 3. 安装 xray: vless+grpc+tls"
+    green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
+    green " 2. 安装 xray: VLESS-H2-uTLS-REALITY"
+    green " 3. 安装 xray: VLESS-GRPC-uTLS-REALITY"
     echo
     green " 4. 更新 xray"
     green " 5. 切换配置"
@@ -808,54 +544,42 @@ function start_menu(){
     read -p "输入数字:" num
     case "$num" in
     1)
-    check_release
-    check_port
-    check_domain "tcp_xtls"
+    start_install "tcp_xtls"
     ;;
     2)
-    check_release
-    check_port
-    check_domain "tcp_tls"
+    start_install "h2"
     ;;
     3)
-    check_release
-    check_port
-    check_domain "ws_tls"
+    start_install "grpc"
     ;;
     4)
     bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     systemctl restart xray
     ;;
+
     5)
-        if [ -f "/usr/local/etc/xray/atrandys_config" ]; then
+        if [ -f "/usr/local/etc/xray/xray_config" ]; then
             green "========================================================="
-            green "当前配置：$(cat /usr/local/etc/xray/atrandys_config)"
-            red "注意！切换配置会使自定义修改的config.json内容丢失，请知晓"
+            green "当前配置：$(cat /usr/local/etc/xray/xray_config)"
             green "========================================================="
             echo
-            green " 1. 切换至vless+tcp+xtls"
-            green " 2. 切换至vless+tcp+tls"
-            green " 3. 切换至vless+grpc+tls"
+            green " 1. 切换至VLESS-TCP-XTLS-uTLS-REALITY"
+            green " 2. 切换至VLESS-H2-uTLS-REALITY"
+            green " 3. 切换至VLESS-GRPC-uTLS-REALITY"
             yellow " 0. 返回上级"
             echo
             read -p "输入数字:" num
             case "$num" in
             1)
             change_2_tcp_xtls
-            change_2_tcp_nginx
-            systemctl restart nginx
             systemctl restart xray
             ;;
             2)
-            change_2_tcp_tls
-            change_2_tcp_nginx
-            systemctl restart nginx
+            change_2_h2
             systemctl restart xray
             ;;
             3)
-            change_2_ws_tls
-            change_2_ws_nginx
-            systemctl restart nginx
+            change_2_grpc
             systemctl restart xray
             ;;
             0)
@@ -871,12 +595,13 @@ function start_menu(){
             esac
         else
             red "似乎你还没有使用过本脚本安装xray，不存在相关配置"
-            sleep 2s
+            sleep 5s
             clear
             start_menu
         fi
         
     ;;
+
     6)
     remove_xray 
     ;;
