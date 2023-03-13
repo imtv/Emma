@@ -51,7 +51,7 @@ install_xray(){
     key=$(xray x25519)
     privateKey=$(sed -n 's/Private key: \(.*\)/\1/p' <<< "$key")
     publicKey=$(sed -n 's/Public key: \(.*\)/\1/p' <<< "$key")
-    shortIds=("$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 6)")
+    shortIds=("$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 6)" "$(openssl rand -hex 8)" "$(openssl rand -hex 8)" "$(openssl rand -hex 8)")
     config_tcp_xtls
     config_h2
     config_grpc
@@ -65,7 +65,14 @@ install_xray(){
         change_2_grpc
     fi
     systemctl restart xray
-    systemctl status xray
+    echo
+    echo
+    green "==xray配置参数=="
+    get_myconfig
+    echo
+    echo
+    green "本次安装检测信息如下，如nginx与xray正常启动，表示安装正常："
+    ps -aux | grep -e xray
 }
 
 config_tcp_xtls(){
@@ -150,7 +157,9 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                         "${shortIds[0]}",
                         "${shortIds[1]}",
                         "${shortIds[2]}",
-                        "${shortIds[3]}"
+                        "${shortIds[3]}",
+                        "${shortIds[4]}",
+                        "${shortIds[5]}"
                     ]
                 }
             },
@@ -185,8 +194,21 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
     ]
 }
 EOF
-}
 
+cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
+{
+地址：${local_addr}
+端口：443
+id：${v2uuid}
+流控：xtls-rprx-direct
+传输协议：tcp
+privateKey：${privateKey}
+publicKey：${publicKey}
+shortIds："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+}
+EOF
+    
+}
 change_2_tcp_xtls(){
     echo "tcp_xtls" > /usr/local/etc/xray/atrandys_config
     \cp /usr/local/etc/xray/tcp_xtls_config.json /usr/local/etc/xray/config.json
@@ -273,12 +295,12 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                     ],
                     "privateKey": "$privateKey", //$publicKey
                     "shortIds": [ 
-                        "$(openssl rand -hex 6)",
-                        "$(openssl rand -hex 6)",
-                        "$(openssl rand -hex 6)",
-                        "$(openssl rand -hex 8)",
-                        "$(openssl rand -hex 8)",
-                        "$(openssl rand -hex 8)"
+                        "${shortIds[0]}",
+                        "${shortIds[1]}",
+                        "${shortIds[2]}",
+                        "${shortIds[3]}",
+                        "${shortIds[4]}",
+                        "${shortIds[5]}"
                     ]
                 }
             },
@@ -400,7 +422,12 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
                     ],
                     "privateKey": "$privateKey", //$publicKey
                     "shortIds": [
-                        "$shortIds"
+                        "${shortIds[0]}",
+                        "${shortIds[1]}",
+                        "${shortIds[2]}",
+                        "${shortIds[3]}",
+                        "${shortIds[4]}",
+                        "${shortIds[5]}"
                     ]
                 },
                 "grpcSettings": {
@@ -444,6 +471,20 @@ change_2_grpc(){
     echo "grpc" > /usr/local/etc/xray/atrandys_config
     \cp /usr/local/etc/xray/grpc_config.json /usr/local/etc/xray/config.json
     #systemctl restart xray
+}
+
+get_myconfig(){
+    check_config_type=$(cat /usr/local/etc/xray/atrandys_config)
+    green "当前配置：$check_config_type"
+    if [ "$check_config_type" == "tcp_xtls" ]; then
+        cat /usr/local/etc/xray/myconfig_tcp_xtls.json
+    fi
+    if [ "$check_config_type" == "h2" ]; then
+        cat /usr/local/etc/xray/myconfig_h2.json
+    fi
+    if [ "$check_config_type" == "grpc" ]; then
+        cat /usr/local/etc/xray/myconfig_grpc.json
+    fi
 }
 
 remove_xray(){
