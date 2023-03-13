@@ -94,7 +94,8 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "type": "field",
                 "domain": [
                     "geosite:category-ads-all",
-                    "geosite:cn"
+                    "geosite:cn",
+                    "geosite:private"
                 ],
                 "outboundTag": "block"
             },
@@ -192,12 +193,52 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
 {
     "log": {
         "loglevel": "warning"
-    }, 
+    },
     "dns": {
         "servers": [
             "https+local://dns.adguard.com/dns-query"
         ],
         "queryStrategy": "UseIPv4"
+    },
+    "routing": { 
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
+                "outboundTag": "hhsg"
+            },
+            {
+                "type": "field",
+                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "outboundTag": "mmtw"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads-all",
+                    "geosite:cn",
+                    "geosite:private"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120
+            }
+        }
     },
     "inbounds": [
         {
@@ -241,29 +282,46 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
     ],
     "outbounds": [
         {
-            "protocol": "freedom", 
-            "settings": { }
+            "protocol": "freedom",
+            "tag": "direct"
         },
-    {
-      "tag": "hhsg",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
-      "tag": "mmtw",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
         {
             "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
-            },
             "tag": "block"
+        },
+        {
+          "tag": "hhsg",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "mmtw",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
-    ],
+    ]
+}
+EOF
+}
+
+change_2_h2(){
+    echo "h2" > /usr/local/etc/xray/atrandys_config
+    \cp /usr/local/etc/xray/h2_config.json /usr/local/etc/xray/config.json
+    #systemctl restart xray
+}
+
+config_grpc(){
+cat > /usr/local/etc/xray/grpc_config.json<<-EOF
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "dns": {
+        "servers": [
+            "https+local://dns.adguard.com/dns-query"
+        ],
+        "queryStrategy": "UseIPv4"
+    },
     "routing": { 
         "domainStrategy": "IPIfNonMatch",
         "rules": [
@@ -281,7 +339,8 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                 "type": "field",
                 "domain": [
                     "geosite:category-ads-all",
-                    "geosite:cn"
+                    "geosite:cn",
+                    "geosite:private"
                 ],
                 "outboundTag": "block"
             },
@@ -294,28 +353,14 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                 "outboundTag": "block"
             }
         ]
-    }
-}
-EOF
-}
-
-change_2_h2(){
-    echo "h2" > /usr/local/etc/xray/atrandys_config
-    \cp /usr/local/etc/xray/h2_config.json /usr/local/etc/xray/config.json
-    #systemctl restart xray
-}
-
-config_grpc(){
-cat > /usr/local/etc/xray/grpc_config.json<<-EOF
-{
-  "log": {
-    "loglevel": "warning"
-  },
-    "dns": {
-        "servers": [
-            "https+local://dns.adguard.com/dns-query"
-        ],
-        "queryStrategy": "UseIPv4"
+    },
+    "policy": {
+        "levels": {
+            "0": {
+                "handshake": 2,
+                "connIdle": 120
+            }
+        }
     },
     "inbounds": [
         {
@@ -362,60 +407,24 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
     ],
     "outbounds": [
         {
-            "protocol": "freedom", 
-            "settings": { }
+            "protocol": "freedom",
+            "tag": "direct"
         },
-    {
-      "tag": "hhsg",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
-    {
-      "tag": "mmtw",
-      "protocol": "socks",
-      "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-    },
         {
             "protocol": "blackhole",
-            "settings": {
-                "response": {
-                    "type": "http"
-                }
-            },
             "tag": "block"
+        },
+        {
+          "tag": "hhsg",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "mmtw",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
-    ],
-    "routing": { 
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
-            {
-                "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
-                "outboundTag": "hhsg"
-            },
-            {
-                "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "mmtw"
-            },
-            {
-                "type": "field",
-                "domain": [
-                    "geosite:category-ads-all",
-                    "geosite:cn"
-                ],
-                "outboundTag": "block"
-            },
-            {
-                "type": "field",
-                "ip": [
-                    "geoip:cn",
-                    "geoip:private"
-                ],
-                "outboundTag": "block"
-            }
-        ]
-    }
+    ]
 }
 EOF
 }
@@ -439,7 +448,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-8\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-9\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
