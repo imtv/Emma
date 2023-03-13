@@ -17,7 +17,7 @@ logcmd(){
     eval $1 | tee -ai /var/atrandys.log
 }
 
-check_domain(){
+start_install(){
     if [ "$1" == "tcp_xtls" ]; then
         config_type="tcp_xtls"
     fi
@@ -28,8 +28,6 @@ check_domain(){
         config_type="grpc"
     fi
     apt install -y wget curl unzip
-    blue "输入当前服务器的IP地址:"
-    read your_domain
     blue "输入流媒体解锁服务器SOCKS的IP:"
     read stream_IP
     blue "端口:"
@@ -450,13 +448,13 @@ function start_menu(){
     read -p "输入数字:" num
     case "$num" in
     1)
-    check_domain "tcp_xtls"
+    start_install "tcp_xtls"
     ;;
     2)
-    check_domain "h2"
+    start_install "h2"
     ;;
     3)
-    check_domain "grpc"
+    start_install "grpc"
     ;;
     4)
     bash <(curl -L https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
