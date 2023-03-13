@@ -47,6 +47,7 @@ install_xray(){
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
+    shortIds=$(openssl rand -hex 8)
     config_tcp_xtls
     config_h2
     config_grpc
@@ -141,14 +142,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                     ],
                     "privateKey": "sExZCeQDVSAfBSsjqxn3DicCbOSv5kmCUhurmIcLbnY",
                     "shortIds": [
-                        "a1",
-                        "bc19",
-                        "b2da06",
-                        "2d940fe6",
-                        "b85e293fa1",
-                        "4a9f72b5c803",
-                        "19f70b462cea5d",
-                        "6ba85179e30d4fc2"
+                        "$shortIds",
                     ]
                 }
             },
@@ -204,50 +198,54 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
         ],
         "queryStrategy": "UseIPv4"
     },
+    },
     "inbounds": [
         {
-            "listen": "0.0.0.0", 
-            "port": 443, 
-            "protocol": "vless", 
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
             "settings": {
                 "clients": [
                     {
-                        "id": "$v2uuid", 
-                        "flow":"xtls-rprx-vision"
+                        "id": "$v2uuid",
+                        "flow": ""
                     }
-                ], 
-                "decryption": "none", 
-                "fallbacks": [
-                    {
-                        "dest": 37212
-                    }, 
-                    {
-                        "alpn": "h2", 
-                        "dest": 37213
-                    }
-                ]
-            }, 
-        "sniffing": { 
-            "destOverride": [
-                "http",
-                "tls"
-            ],
-            "enabled": true
-        },
+                ],
+                "decryption": "none"
+            },
             "streamSettings": {
-                "network": "tcp", 
-                "security": "tls", 
-                "tlsSettings": {
-                    "certificates": [
-                        {
-                            "certificateFile": "/usr/local/etc/xray/cert/fullchain.cer", 
-                            "keyFile": "/usr/local/etc/xray/cert/private.key"
-                        }
+                "network": "h2",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.lovelive-anime.jp:443", 
+                    "xver": 0,
+                    "serverNames": [ 
+                        "lovelive-anime.jp", 
+                        "www.lovelive-anime.jp"
+                    ],
+                    "privateKey": "sExZCeQDVSAfBSsjqxn3DicCbOSv5kmCUhurmIcLbnY",
+                    "shortIds": [ 
+                        "a1", 
+                        "bc19",
+                        "b2da06",
+                        "2d940fe6",
+                        "b85e293fa1",
+                        "4a9f72b5c803",
+                        "19f70b462cea5d",
+                        "6ba85179e30d4fc2"
                     ]
                 }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
             }
         }
-    ], 
+    ],
     "outbounds": [
         {
             "protocol": "freedom", 
@@ -326,34 +324,56 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
         ],
         "queryStrategy": "UseIPv4"
     },
-  "inbounds": [
-    {
-      "port": 2002,
-      "listen": "127.0.0.1",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "$v2uuid"
-          }
-        ],
-        "decryption": "none"
-      },
-        "sniffing": { 
-            "destOverride": [
-                "http",
-                "tls"
-            ],
-            "enabled": true
-        },
-      "streamSettings": {
-        "network": "grpc",
-        "grpcSettings": {
-          "serviceName": "$your_domain"
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$v2uuid",
+                        "flow": "" // 留空
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "grpc",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "dest": "www.lovelive-anime.jp:443",
+                    "xver": 0,
+                    "serverNames": [
+                        "lovelive-anime.jp",
+                        "www.lovelive-anime.jp"
+                    ],
+                    "privateKey": "2KZ4uouMKgI8nR-LDJNP1_MHisCJOmKGj9jUjZLncVU",
+                    "shortIds": [
+                        "a1", // 0 到 f，长度为 2 的倍数，长度上限为 16，或执行 openssl rand -hex 8 生成
+                        "bc19",
+                        "b2da06",
+                        "2d940fe6",
+                        "b85e293fa1",
+                        "4a9f72b5c803",
+                        "19f70b462cea5d",
+                        "6ba85179e30d4fc2"
+                    ]
+                },
+                "grpcSettings": {
+                    "serviceName": "grpc" // 指定服务名称，若客户端为 Clash Meta Kernel，不能留空
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
         }
-      }
-    }
-  ],
+    ],
     "outbounds": [
         {
             "protocol": "freedom", 
@@ -433,7 +453,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-4\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-6\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
