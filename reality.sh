@@ -152,7 +152,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                         "lovelive-anime.jp",
                         "www.lovelive-anime.jp"
                     ],
-                    "privateKey": "$privateKey", //$publicKey
+                    "privateKey": "$privateKey",
                     "shortIds": [
                         "${shortIds[0]}",
                         "${shortIds[1]}",
@@ -294,7 +294,7 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                         "lovelive-anime.jp", 
                         "www.lovelive-anime.jp"
                     ],
-                    "privateKey": "$privateKey", //$publicKey
+                    "privateKey": "$privateKey",
                     "shortIds": [ 
                         "${shortIds[0]}",
                         "${shortIds[1]}",
@@ -435,7 +435,7 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
                         "lovelive-anime.jp",
                         "www.lovelive-anime.jp"
                     ],
-                    "privateKey": "$privateKey", //$publicKey
+                    "privateKey": "$privateKey",
                     "shortIds": [
                         "${shortIds[0]}",
                         "${shortIds[1]}",
