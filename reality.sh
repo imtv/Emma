@@ -204,7 +204,7 @@ flow：xtls-rprx-direct
 network   ：tcp
 privateKey：${privateKey}
 publicKey ：${publicKey}
-shortIds  ："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
     
@@ -346,7 +346,7 @@ flow：
 network   ：h2
 privateKey：${privateKey}
 publicKey ：${publicKey}
-shortIds  ："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
     
@@ -490,7 +490,7 @@ flow：
 network   ：grpc
 privateKey：${privateKey}
 publicKey ：${publicKey}
-shortIds  ："${shortIds[0]}","${shortIds[1]}","${shortIds[2]}","${shortIds[3]}","${shortIds[4]}","${shortIds[5]}"
+shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
 
