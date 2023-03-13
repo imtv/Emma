@@ -47,7 +47,6 @@ install_xray(){
     cd /usr/local/etc/xray/
     rm -f config.json
     v2uuid=$(cat /proc/sys/kernel/random/uuid)
-    shortIds=$(openssl rand -hex 8)
     local_addr=`curl ipv4.icanhazip.com`
     key=$(xray x25519)
     privateKey=$(sed -n 's/Private key: \(.*\)/\1/p' <<< "$key")
@@ -147,7 +146,12 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                     ],
                     "privateKey": "$privateKey", //$publicKey
                     "shortIds": [
-                        "$shortIds"
+                        "$(openssl rand -hex 6)",
+                        "$(openssl rand -hex 6)",
+                        "$(openssl rand -hex 6)",
+                        "$(openssl rand -hex 8)",
+                        "$(openssl rand -hex 8)",
+                        "$(openssl rand -hex 8)"
                     ]
                 }
             },
@@ -270,7 +274,12 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                     ],
                     "privateKey": "$privateKey", //$publicKey
                     "shortIds": [ 
-                        "$shortIds"
+                        "$(openssl rand -hex 6)",
+                        "$(openssl rand -hex 6)",
+                        "$(openssl rand -hex 6)",
+                        "$(openssl rand -hex 8)",
+                        "$(openssl rand -hex 8)",
+                        "$(openssl rand -hex 8)"
                     ]
                 }
             },
@@ -451,7 +460,7 @@ remove_xray(){
 function start_menu(){
     clear
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-12\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-13\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
