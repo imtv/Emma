@@ -11,5 +11,5 @@ bash <(curl -Ls https://raw.githubusercontent.com/imtv/xray/main/reality.sh)
 bash <(curl -Ls https://raw.githubusercontent.com/imtv/xray/main/Xray.sh)
 ```
 安装方案有：<Br/>vless+tcp+xtls / vless+tcp+xtls-Vision / vless+grpc+tls
-<Br/>
-均支持通过SOCKS解锁流媒体
+
+<Br/><Br/>均支持通过SOCKS解锁流媒体
