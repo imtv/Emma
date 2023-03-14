@@ -487,10 +487,11 @@ ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
 flow：
-network   ：grpc
-privateKey：${privateKey}
-publicKey ：${publicKey}
-shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
+network    ：grpc
+serviceName：grpc
+privateKey ：${privateKey}
+publicKey  ：${publicKey}
+shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
 
