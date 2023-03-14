@@ -1,6 +1,6 @@
 # Xray一键安装脚本
 
-**reality版：**
+<Br/>**reality版：**
 ```
 bash <(curl -Ls https://raw.githubusercontent.com/imtv/xray/main/reality.sh)
 ```
