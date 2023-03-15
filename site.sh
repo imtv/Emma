@@ -35,13 +35,23 @@ function start_menu(){
     site=elements.envato.com
     ;;
     b)
-    start_install "h2"
+    site=elements.envato.com
     ;;
     c)
-    start_install "grpc"
+    site=elements.envato.com
     ;;
     d)
- 
+    site=elements.envato.com
+    ;;
+    e)
+    site=elements.envato.com
+    ;;
+    f)
+    site=elements.envato.com
+    ;;
+    g)
+    site=elements.envato.com
+    ;;
     0)
     exit 1
     ;;
