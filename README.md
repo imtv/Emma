@@ -4,7 +4,7 @@
 ```
 bash <(curl -Ls https://raw.githubusercontent.com/imtv/xray/main/reality.sh)
 ```
-安装方案有：<Br/>VLESS-TCP-XTLS-uTLS-REALITY / VLESS-H2-uTLS-REALITY / VLESS-GRPC-uTLS-REALITY
+安装方案有：<Br/>VLESS-XTLS-uTLS-REALITY / VLESS-H2-uTLS-REALITY / VLESS-GRPC-uTLS-REALITY
 
 <Br/><Br/>**tls版：**
 ```
