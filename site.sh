@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 blue(){
@@ -35,22 +36,22 @@ function start_menu(){
     site=elements.envato.com
     ;;
     b)
-    site=elements.envato.com
+    site=www.bhphotovideo.com
     ;;
     c)
-    site=elements.envato.com
+    site=plus.nhk.jp
     ;;
     d)
-    site=elements.envato.com
+    site=kurand.jp
     ;;
     e)
-    site=elements.envato.com
+    site=www.rustictown.com
     ;;
     f)
-    site=elements.envato.com
+    site=www.hsbc.com.hk
     ;;
     g)
-    site=elements.envato.com
+    site=hkow.hk
     ;;
     0)
     exit 1
