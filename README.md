@@ -14,4 +14,4 @@ bash <(curl -Ls https://raw.githubusercontent.com/imtv/xray/main/Xray.sh)
 
 <Br/><Br/>**注意：**
 <Br/>1.均支持通过SOCKS解锁流媒体
-<Br/>2.该脚本为自用脚本，如有需求还请自行修改XRAY配置文件
+<Br/>2.自用脚本，如有不同需求还请自行修改XRAY配置文件
