@@ -785,6 +785,7 @@ remove_xray(){
     rm -rf /etc/nginx
     rm -rf /usr/share/nginx/html/*
     rm -rf /root/.acme.sh/
+    sed -i '/.acme.sh\/acme.sh.env/d' ~/.bashrc
     green "nginx & xray has been deleted."
     
 }
