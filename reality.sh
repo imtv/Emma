@@ -529,10 +529,10 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-18\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-19\033[0m"
     green "======================================================="
     echo
-    green " 1. 安装 xray: VLESS-TCP-XTLS-uTLS-REALITY"
+    green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
     green " 2. 安装 xray: VLESS-H2-uTLS-REALITY"
     green " 3. 安装 xray: VLESS-GRPC-uTLS-REALITY"
     echo
@@ -564,7 +564,7 @@ function start_menu(){
             green "当前配置：$(cat /usr/local/etc/xray/xray_config)"
             green "========================================================="
             echo
-            green " 1. 切换至VLESS-TCP-XTLS-uTLS-REALITY"
+            green " 1. 切换至VLESS-XTLS-uTLS-REALITY"
             green " 2. 切换至VLESS-H2-uTLS-REALITY"
             green " 3. 切换至VLESS-GRPC-uTLS-REALITY"
             yellow " 0. 返回上级"
