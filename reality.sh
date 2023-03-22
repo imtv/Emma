@@ -92,13 +92,18 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
+                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
                 "outboundTag": "hhsg"
             },
             {
                 "type": "field",
                 "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
+            },
+            {
+                "type": "field",
+                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo"],
+                "outboundTag": "dtus"
             },
             {
                 "type": "field",
@@ -190,6 +195,11 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
           "tag": "mmtw",
           "protocol": "socks",
           "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "dtus",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -202,7 +212,6 @@ port：443
 id  ：${v2uuid}
 flow：xtls-rprx-direct
 network   ：tcp
-privateKey：${privateKey}
 publicKey ：${publicKey}
 shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
@@ -234,13 +243,18 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
+                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
                 "outboundTag": "hhsg"
             },
             {
                 "type": "field",
                 "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
+            },
+            {
+                "type": "field",
+                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo"],
+                "outboundTag": "dtus"
             },
             {
                 "type": "field",
@@ -332,6 +346,11 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
           "tag": "mmtw",
           "protocol": "socks",
           "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "dtus",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -344,7 +363,6 @@ port：443
 id  ：${v2uuid}
 flow：
 network   ：h2
-privateKey：${privateKey}
 publicKey ：${publicKey}
 shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
@@ -375,13 +393,18 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney","geosite:hbo","geosite:primevideo"],
+                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
                 "outboundTag": "hhsg"
             },
             {
                 "type": "field",
                 "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
+            },
+            {
+                "type": "field",
+                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo"],
+                "outboundTag": "dtus"
             },
             {
                 "type": "field",
@@ -476,6 +499,11 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
           "tag": "mmtw",
           "protocol": "socks",
           "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
+        },
+        {
+          "tag": "dtus",
+          "protocol": "socks",
+          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -489,7 +517,6 @@ id  ：${v2uuid}
 flow：
 network    ：grpc
 serviceName：grpc
-privateKey ：${privateKey}
 publicKey  ：${publicKey}
 shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
@@ -529,11 +556,11 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230313-19\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230322-1\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
-    green " 2. 安装 xray: VLESS-H2-uTLS-REALITY"
+    green " 2. 安装 xray: VLESS-H2-uTLS-REALITY (推荐)"
     green " 3. 安装 xray: VLESS-GRPC-uTLS-REALITY"
     echo
     green " 4. 更新 xray"
