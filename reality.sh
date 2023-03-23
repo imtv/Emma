@@ -594,7 +594,7 @@ function start_menu(){
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
-    green " 2. 安装 xray: VLESS-H2-uTLS-REALITY (推荐)"
+    green " 2. 安装 xray: VLESS-H2-uTLS-REALITY"
     green " 3. 安装 xray: VLESS-GRPC-uTLS-REALITY"
     echo
     green " 4. 更新 xray"
