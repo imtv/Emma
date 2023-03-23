@@ -36,6 +36,41 @@ start_install(){
     read stream_id
     blue "密码:"
     read stream_password
+
+    echo -e "\033[34m\033[01m选择指向的网站\033[0m"
+    echo
+    green " a. elements.envato.com
+    green " b. www.bhphotovideo.com
+    green " c. plus.nhk.jp
+    green " d. kurand.jp
+    green " e. www.rustictown.com
+    green " f. www.hsbc.com.hk
+    green " g. hkow.hk
+    echo
+    read -p "输入数字:" num
+    case "$num" in
+    a)
+    site=elements.envato.com
+    ;;
+    b)
+    site=www.bhphotovideo.com
+    ;;
+    c)
+    site=plus.nhk.jp
+    ;;
+    d)
+    site=kurand.jp
+    ;;
+    e)
+    site=www.rustictown.com
+    ;;
+    f)
+    site=www.hsbc.com.hk
+    ;;
+    g)
+    site=hkow.hk
+    ;;
+
     install_xray
 }
 
@@ -151,11 +186,10 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "security": "reality",
                 "realitySettings": {
                     "show": false,
-                    "dest": "www.lovelive-anime.jp:443",
+                    "dest": "$site:443",
                     "xver": 0,
                     "serverNames": [
-                        "lovelive-anime.jp",
-                        "www.lovelive-anime.jp"
+                        "$site"
                     ],
                     "privateKey": "$privateKey",
                     "shortIds": [
@@ -210,7 +244,7 @@ cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
 ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
-flow：xtls-rprx-direct
+flow：xtls-rprx-vision
 network   ：tcp
 publicKey ：${publicKey}
 shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
@@ -361,7 +395,7 @@ cat > /usr/local/etc/xray/myconfig_h2.json<<-EOF
 ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
-flow：
+flow：留空
 network   ：h2
 publicKey ：${publicKey}
 shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
@@ -514,7 +548,7 @@ cat > /usr/local/etc/xray/myconfig_grpc.json<<-EOF
 ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
-flow：
+flow：留空
 network    ：grpc
 serviceName：grpc
 publicKey  ：${publicKey}
@@ -556,7 +590,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230322-1\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230323-1\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
