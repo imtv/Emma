@@ -36,6 +36,50 @@ start_install(){
     read stream_id
     blue "密码:"
     read stream_password
+    choose_site
+}
+
+function choose_site(){
+    echo -e "\033[34m\033[01m选择指向的网站\033[0m"
+    echo
+    green " a. elements.envato.com"
+    green " b. www.bhphotovideo.com"
+    green " c. plus.nhk.jp"
+    green " d. kurand.jp"
+    green " e. www.rustictown.com"
+    green " f. www.hsbc.com.hk"
+    green " g. hkow.hk"
+    echo
+    read -p "输入数字:" num
+    case "$num" in
+    a)
+    site=elements.envato.com
+    ;;
+    b)
+    site=www.bhphotovideo.com
+    ;;
+    c)
+    site=plus.nhk.jp
+    ;;
+    d)
+    site=kurand.jp
+    ;;
+    e)
+    site=www.rustictown.com
+    ;;
+    f)
+    site=www.hsbc.com.hk
+    ;;
+    g)
+    site=hkow.hk
+    ;;
+    *)
+    clear
+    red "请输入正确的数字"
+    sleep 2s
+    choose_site
+    ;;
+    esac
     install_xray
 }
 
@@ -556,7 +600,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230324-2\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230324-3\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
