@@ -49,6 +49,7 @@ function choose_site(){
     green " e. www.rustictown.com"
     green " f. www.hsbc.com.hk"
     green " g. hkow.hk"
+    green " h. 自定义"
     echo
     read -p "输入数字:" num
     case "$num" in
@@ -72,6 +73,10 @@ function choose_site(){
     ;;
     g)
     site=hkow.hk
+    ;;
+    h)
+    blue "请输入:"
+    read site
     ;;
     *)
     clear
@@ -195,11 +200,10 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
                 "security": "reality",
                 "realitySettings": {
                     "show": false,
-                    "dest": "www.lovelive-anime.jp:443",
+                    "dest": "$site:443",
                     "xver": 0,
                     "serverNames": [
-                        "lovelive-anime.jp",
-                        "www.lovelive-anime.jp"
+                        "$site"
                     ],
                     "privateKey": "$privateKey",
                     "shortIds": [
@@ -346,11 +350,10 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
                 "security": "reality",
                 "realitySettings": {
                     "show": false,
-                    "dest": "www.lovelive-anime.jp:443", 
+                    "dest": "$site:443",
                     "xver": 0,
-                    "serverNames": [ 
-                        "lovelive-anime.jp", 
-                        "www.lovelive-anime.jp"
+                    "serverNames": [
+                        "$site"
                     ],
                     "privateKey": "$privateKey",
                     "shortIds": [ 
@@ -496,11 +499,10 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
                 "security": "reality",
                 "realitySettings": {
                     "show": false,
-                    "dest": "www.lovelive-anime.jp:443",
+                    "dest": "$site:443",
                     "xver": 0,
                     "serverNames": [
-                        "lovelive-anime.jp",
-                        "www.lovelive-anime.jp"
+                        "$site"
                     ],
                     "privateKey": "$privateKey",
                     "shortIds": [
@@ -600,7 +602,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230324-3\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230323-4\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
