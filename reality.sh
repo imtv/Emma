@@ -259,9 +259,10 @@ ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
 flow：xtls-rprx-vision
-network   ：tcp
-publicKey ：${publicKey}
-shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
+network    ：tcp
+serverNames：${site}
+publicKey  ：${publicKey}
+shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
     
@@ -409,9 +410,10 @@ ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
 flow：留空
-network   ：h2
-publicKey ：${publicKey}
-shortIds  ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
+network    ：h2
+serverNames：${site}
+publicKey  ：${publicKey}
+shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
 EOF
     
@@ -563,6 +565,7 @@ id  ：${v2uuid}
 flow：留空
 network    ：grpc
 serviceName：grpc
+serverNames：${site}
 publicKey  ：${publicKey}
 shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
 }
@@ -602,7 +605,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230324-5\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230324-6\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
