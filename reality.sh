@@ -79,7 +79,6 @@ function choose_site(){
     read site
     ;;
     *)
-    clear
     red "请输入正确的数字"
     sleep 2s
     choose_site
@@ -254,7 +253,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
 EOF
 
 cat > /usr/local/etc/xray/myconfig_tcp_xtls.json<<-EOF
-{
+
 ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
@@ -263,7 +262,7 @@ network    ：tcp
 serverNames：${site}
 publicKey  ：${publicKey}
 shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
-}
+
 EOF
     
 }
@@ -405,7 +404,7 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
 EOF
 
 cat > /usr/local/etc/xray/myconfig_h2.json<<-EOF
-{
+
 ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
@@ -414,7 +413,9 @@ network    ：h2
 serverNames：${site}
 publicKey  ：${publicKey}
 shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
-}
+
+vless://${v2uuid}@${local_addr}:443?encryption=none&security=reality&pbk=${publicKey}&sid=${shortIds[1]}&spx=%2F&type=http&fp=chrome&sni=${site}#
+
 EOF
     
 }
@@ -558,7 +559,7 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
 EOF
 
 cat > /usr/local/etc/xray/myconfig_grpc.json<<-EOF
-{
+
 ip  ：${local_addr}
 port：443
 id  ：${v2uuid}
@@ -568,7 +569,7 @@ serviceName：grpc
 serverNames：${site}
 publicKey  ：${publicKey}
 shortIds   ：${shortIds[0]},${shortIds[1]},${shortIds[2]},${shortIds[3]},${shortIds[4]},${shortIds[5]}
-}
+
 EOF
 
 }
@@ -605,7 +606,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230324-6\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230407-1\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
