@@ -150,7 +150,7 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
             },
             {
                 "type": "field",
-                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo"],
+                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
                 "outboundTag": "dtus"
             },
             {
@@ -301,7 +301,7 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
             },
             {
                 "type": "field",
-                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo"],
+                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
                 "outboundTag": "dtus"
             },
             {
@@ -453,7 +453,7 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
             },
             {
                 "type": "field",
-                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo"],
+                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
                 "outboundTag": "dtus"
             },
             {
@@ -606,7 +606,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230407-1\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230407-2\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
