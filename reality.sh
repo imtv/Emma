@@ -606,7 +606,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230407-2\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230418\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
