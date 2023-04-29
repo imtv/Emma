@@ -1,4 +1,6 @@
 #EXTM3U x-tvg-url="http://epg.51zmt.top:8000/e.xml"
+#EXTINF:-1 tvg-logo="https://ossrs.net/lts/zh-cn/img/srs-200x200.png",SRS-Live
+http://10.10.10.21:8080/live/live.flv
 #EXTINF:-1 tvg-id="1984" tvg-logo="http://n.ysyz.top:99/buyaolian/shwx.png",新闻综合
 http://10.10.10.1:3000/rtp/225.0.0.1:6140
 #EXTINF:-1 tvg-id="1989" tvg-logo="http://n.ysyz.top:99/buyaolian/shds.png",都市频道
