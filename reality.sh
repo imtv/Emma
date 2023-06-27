@@ -145,13 +145,18 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
             },
             {
                 "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "domain": ["pubu.com.tw","catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
             },
             {
                 "type": "field",
+                "domain": ["geosite:adobe"],
+                "outboundTag": "bvtr"
+            },
+            {
+                "type": "field",
                 "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
-                "outboundTag": "dtus"
+                "outboundTag": "ggus"
             },
             {
                 "type": "field",
@@ -237,16 +242,6 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
           "tag": "hhsg",
           "protocol": "socks",
           "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-        },
-        {
-          "tag": "mmtw",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-        },
-        {
-          "tag": "dtus",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -296,13 +291,18 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
             },
             {
                 "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "domain": ["pubu.com.tw","catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
             },
             {
                 "type": "field",
+                "domain": ["geosite:adobe"],
+                "outboundTag": "bvtr"
+            },
+            {
+                "type": "field",
                 "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
-                "outboundTag": "dtus"
+                "outboundTag": "ggus"
             },
             {
                 "type": "field",
@@ -388,16 +388,6 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
           "tag": "hhsg",
           "protocol": "socks",
           "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-        },
-        {
-          "tag": "mmtw",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-        },
-        {
-          "tag": "dtus",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -448,13 +438,18 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
             },
             {
                 "type": "field",
-                "domain": ["catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
+                "domain": ["pubu.com.tw","catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
                 "outboundTag": "mmtw"
             },
             {
                 "type": "field",
+                "domain": ["geosite:adobe"],
+                "outboundTag": "bvtr"
+            },
+            {
+                "type": "field",
                 "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
-                "outboundTag": "dtus"
+                "outboundTag": "ggus"
             },
             {
                 "type": "field",
@@ -543,16 +538,6 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
           "tag": "hhsg",
           "protocol": "socks",
           "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-        },
-        {
-          "tag": "mmtw",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
-        },
-        {
-          "tag": "dtus",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -606,7 +591,7 @@ remove_xray(){
 
 function start_menu(){
     green "======================================================="
-    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230418\033[0m"
+    echo -e "\033[34m\033[01mXRAY-REALITY安装脚本20230407-1\033[0m"
     green "======================================================="
     echo
     green " 1. 安装 xray: VLESS-XTLS-uTLS-REALITY"
