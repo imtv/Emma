@@ -44,11 +44,11 @@ function choose_site(){
     echo
     green " a. elements.envato.com"
     green " b. www.bhphotovideo.com"
-    green " c. plus.nhk.jp"
+    green " c. plus.nhk.jp✔"
     green " d. kurand.jp"
     green " e. www.rustictown.com"
-    green " f. www.hsbc.com.hk"
-    green " g. hkow.hk"
+    green " f. www.hsbc.com.hk✔"
+    green " g. hkow.hk✔"
     green " h. 自定义"
     echo
     read -p "输入数字:" num
