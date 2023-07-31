@@ -42,31 +42,31 @@ start_install(){
 function choose_site(){
     echo -e "\033[34m\033[01m选择指向的网站\033[0m"
     echo
-    green " a. elements.envato.com"
-    green " b. www.bhphotovideo.com"
-    green " c. plus.nhk.jp✔"
-    green " d. kurand.jp"
-    green " e. www.rustictown.com"
-    green " f. www.hsbc.com.hk✔"
-    green " g. hkow.hk✔"
+    green " a. addons.mozilla.org"
+    green " b. idev.dev"
+    green " c. plus.nhk.jp"
+    green " d. www.icloud.com"
+    green " e. www.lovelive-anime.jp"
+    green " f. www.hsbc.com.hk"
+    green " g. hkow.hk"
     green " h. 自定义"
     echo
     read -p "输入数字:" num
     case "$num" in
     a)
-    site=elements.envato.com
+    site=addons.mozilla.org
     ;;
     b)
-    site=www.bhphotovideo.com
+    site=idev.dev
     ;;
     c)
     site=plus.nhk.jp
     ;;
     d)
-    site=kurand.jp
+    site=www.icloud.com
     ;;
     e)
-    site=www.rustictown.com
+    site=www.lovelive-anime.jp
     ;;
     f)
     site=www.hsbc.com.hk
