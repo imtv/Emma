@@ -1,10 +1,5 @@
 # autodesk
-||autodesk.fi^
-||autodesk.de^
-||autodesk.es^
-||autodesk.ca^
-||autodesk.dk^
-||autodesk.pl^
+||autodesk.*^
 ||autodesk.com^
 ||gtld-servers.net^
 
