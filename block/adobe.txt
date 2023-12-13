@@ -75,8 +75,8 @@
 ||developria.com^
 
 # Behance
-||behance.net^
-||s2stagehance.com^
+# ||behance.net^
+# ||s2stagehance.com^
 
 ||# Creative Cloud^
 ||adobecc.com^
@@ -86,24 +86,24 @@
 ||creativesdk.com^
 
 # Fotolia
-||cotolia.com^
-||ffotolia.com^
-||fiotolia.com^
-||foftolia.com^
-||fonolia.com^
-||fotiolia.com^
-||fotoiia.com^
-||fotolia-noticias.com^
-||fotolia.cc^
-||fotolia.com^
-||fotolia.tv^
-||fotolja.com^
-||fptolia.com^
-||gfotolia.com^
-||motolia.com^
-||photolia.net^
-||tenbyfotolia.com^
-||votolia.com^
+# ||cotolia.com^
+# ||ffotolia.com^
+# ||fiotolia.com^
+# ||foftolia.com^
+# ||fonolia.com^
+# ||fotiolia.com^
+# ||fotoiia.com^
+# ||fotolia-noticias.com^
+# ||fotolia.cc^
+# ||fotolia.com^
+# ||fotolia.tv^
+# ||fotolja.com^
+# ||fptolia.com^
+# ||gfotolia.com^
+# ||motolia.com^
+# ||photolia.net^
+# ||tenbyfotolia.com^
+# ||votolia.com^
 
 # Magento
 ||bluefootcms.com^
