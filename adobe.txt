@@ -1,8 +1,3 @@
-# autodesk
-||autodesk.*^
-||autodesk.com^
-||gtld-servers.net^
-
 #adobe
 ||adobeereg.com^
 ||10xfotolia.com^
