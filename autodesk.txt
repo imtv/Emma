@@ -1,0 +1,4 @@
+# autodesk
+||autodesk.*^
+||autodesk.com^
+||gtld-servers.net^
