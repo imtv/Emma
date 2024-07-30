@@ -17,6 +17,8 @@ http://10.10.10.1:3000/rtp/225.0.0.8:6140
 http://10.10.10.1:3000/rtp/225.0.0.208:6140
 #EXTINF:-1 tvg-id="1991" tvg-logo="http://n.ysyz.top:99/buyaolian/shwy.png",上视外语频道
 http://10.10.10.1:3000/rtp/225.0.0.10:6140
+#EXTINF:-1 tvg-id="1" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png",CCTV超高清
+http://10.10.10.1:3000/rtp/225.0.0.127:6140
 #EXTINF:-1 tvg-id="1" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png",CCTV1
 http://10.10.10.1:3000/rtp/225.0.0.25:6140
 #EXTINF:-1 tvg-id="2" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv2.png",CCTV2
@@ -27,8 +29,6 @@ http://10.10.10.1:3000/rtp/225.0.0.27:6140
 http://10.10.10.1:3000/rtp/225.0.0.191:6140
 #EXTINF:-1 tvg-id="5" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv5.png",CCTV5
 http://10.10.10.1:3000/rtp/225.0.0.29:6140
-#EXTINF:-1 tvg-id="5" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv5.png",CCTV5
-http://10.10.10.1:3000/rtp/225.0.0.166:6140
 #EXTINF:-1 tvg-id="7" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv6.png",CCTV6
 http://10.10.10.1:3000/rtp/225.0.0.30:6140
 #EXTINF:-1 tvg-id="8" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv7.png",CCTV7
