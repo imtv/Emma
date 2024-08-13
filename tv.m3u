@@ -47,12 +47,18 @@ http://10.10.10.1:3000/rtp/225.0.0.214:6140
 http://10.10.10.1:3000/rtp/225.0.0.229:6140
 #EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png",CCTV16
 http://10.10.10.1:3000/rtp/225.0.0.180:6140
-#EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png",CCTV16-4K
+#EXTINF:-1 tvg-id="7249" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv16.png" group-title="4K",CCTV16-4K
 http://10.10.10.1:3000/rtp/225.0.0.181:6140
 #EXTINF:-1 tvg-id="17" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv17.png",CCTV17
 http://10.10.10.1:3000/rtp/225.0.0.215:6140
-#EXTINF:-1 tvg-id="1" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png",CCTV超高清
+#EXTINF:-1 tvg-id="1" tvg-logo="http://n.ysyz.top:99/buyaolian/cctv1.png" group-title="4K",CCTV超高清
 http://10.10.10.1:3000/rtp/225.0.0.127:6140
+#EXTINF:-1 tvg-id="凤凰中文" tvg-name="凤凰中文" tvg-logo="https://live.fanmingming.com/tv/凤凰卫视中文台.png" group-title="卫视频道",凤凰中文
+http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pcc72.m3u8
+#EXTINF:-1 tvg-id="凤凰资讯" tvg-name="凤凰资讯" tvg-logo="https://live.fanmingming.com/tv/凤凰卫视资讯台.png" group-title="卫视频道",凤凰资讯
+http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pin72.m3u8
+#EXTINF:-1 tvg-id="凤凰香港" tvg-name="凤凰香港" tvg-logo="https://live.fanmingming.com/tv/凤凰卫视香港台.png" group-title="卫视频道",凤凰香港
+http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701phk72.m3u8
 #EXTINF:-1 tvg-id="27" tvg-logo="http://n.ysyz.top:99/buyaolian/hunan.png",湖南卫视
 http://10.10.10.1:3000/rtp/225.0.0.55:6140
 #EXTINF:-1 tvg-id="28" tvg-logo="http://n.ysyz.top:99/buyaolian/zhejiang.png",浙江卫视
