@@ -35,12 +35,12 @@ function choose_site(){
     echo -e "\033[34m\033[01m选择指向的网站\033[0m"
     echo
     green " a. addons.mozilla.org"
-    green " b. idev.dev"
+    green " b. www.tesla.com"
     green " c. plus.nhk.jp"
     green " d. www.icloud.com"
-    green " e. www.lovelive-anime.jp"
+    green " e. aws.amazon.com"
     green " f. www.hsbc.com.hk"
-    green " g. hkow.hk"
+    green " g. www.nvidia.com"
     green " h. 自定义"
     echo
     read -p "输入数字:" num
@@ -49,7 +49,7 @@ function choose_site(){
     site=addons.mozilla.org
     ;;
     b)
-    site=idev.dev
+    site=www.tesla.com
     ;;
     c)
     site=plus.nhk.jp
@@ -58,13 +58,13 @@ function choose_site(){
     site=www.icloud.com
     ;;
     e)
-    site=www.lovelive-anime.jp
+    site=aws.amazon.com
     ;;
     f)
     site=www.hsbc.com.hk
     ;;
     g)
-    site=hkow.hk
+    site=www.nvidia.com
     ;;
     h)
     blue "请输入:"
