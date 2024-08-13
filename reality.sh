@@ -28,14 +28,6 @@ start_install(){
         config_type="grpc"
     fi
     apt install -y wget curl unzip
-    blue "输入流媒体解锁服务器SOCKS的IP:"
-    read stream_IP
-    blue "端口:"
-    read stream_port
-    blue "用户名:"
-    read stream_id
-    blue "密码:"
-    read stream_password
     choose_site
 }
 
@@ -140,26 +132,6 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         "rules": [
             {
                 "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
-                "outboundTag": "hhsg"
-            },
-            {
-                "type": "field",
-                "domain": ["pubu.com.tw","catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "mmtw"
-            },
-            {
-                "type": "field",
-                "domain": ["geosite:adobe"],
-                "outboundTag": "bvtr"
-            },
-            {
-                "type": "field",
-                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
-                "outboundTag": "ggus"
-            },
-            {
-                "type": "field",
                 "domain": [
                     "geosite:category-ads-all",
                     "geosite:cn",
@@ -237,11 +209,6 @@ cat > /usr/local/etc/xray/tcp_xtls_config.json<<-EOF
         {
             "protocol": "blackhole",
             "tag": "block"
-        },
-        {
-          "tag": "hhsg",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -284,26 +251,6 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
     "routing": { 
         "domainStrategy": "IPIfNonMatch",
         "rules": [
-            {
-                "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
-                "outboundTag": "hhsg"
-            },
-            {
-                "type": "field",
-                "domain": ["pubu.com.tw","catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "mmtw"
-            },
-            {
-                "type": "field",
-                "domain": ["geosite:adobe"],
-                "outboundTag": "bvtr"
-            },
-            {
-                "type": "field",
-                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
-                "outboundTag": "ggus"
-            },
             {
                 "type": "field",
                 "domain": [
@@ -383,11 +330,6 @@ cat > /usr/local/etc/xray/h2_config.json<<-EOF
         {
             "protocol": "blackhole",
             "tag": "block"
-        },
-        {
-          "tag": "hhsg",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
@@ -431,26 +373,6 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
     "routing": { 
         "domainStrategy": "IPIfNonMatch",
         "rules": [
-            {
-                "type": "field",
-                "domain": ["geosite:netflix","tudum.com","geosite:disney"],
-                "outboundTag": "hhsg"
-            },
-            {
-                "type": "field",
-                "domain": ["pubu.com.tw","catchplay.com.tw","catchplay.com","cloudfront.net","akamaized.net","services.googleapis.cn","xn--ngstr-lra8j.com"],
-                "outboundTag": "mmtw"
-            },
-            {
-                "type": "field",
-                "domain": ["geosite:adobe"],
-                "outboundTag": "bvtr"
-            },
-            {
-                "type": "field",
-                "domain": ["openai.com","bard.google.com","geosite:hbo","geosite:primevideo","geosite:tiktok"],
-                "outboundTag": "ggus"
-            },
             {
                 "type": "field",
                 "domain": [
@@ -533,11 +455,6 @@ cat > /usr/local/etc/xray/grpc_config.json<<-EOF
         {
             "protocol": "blackhole",
             "tag": "block"
-        },
-        {
-          "tag": "hhsg",
-          "protocol": "socks",
-          "settings": {"servers": [{"address": "${stream_IP}","port": ${stream_port},"users": [{"user": "${stream_id}","pass": "${stream_password}"}]}]}
         }
     ]
 }
