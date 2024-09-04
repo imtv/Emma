@@ -17,9 +17,9 @@ http://10.10.10.1:6000/rtp/225.0.0.8:6140
 http://10.10.10.1:6000/rtp/225.0.0.208:6140
 #EXTINF:-1 tvg-id="1991" tvg-logo="http://10.10.10.9/assets/tvg-logo/shwy.png" group-title="上海",上视外语频道
 http://10.10.10.1:6000/rtp/225.0.0.10:6140
-#EXTINF:-1 group-title="上海",东方购物1
+#EXTINF:-1  group-title="电视购物",东方购物1
 http://10.10.10.1:6000/rtp/225.0.0.11:6140
-#EXTINF:-1 group-title="上海",东方购物2
+#EXTINF:-1  group-title="电视购物",东方购物2
 http://10.10.10.1:6000/rtp/225.0.0.12:6140
 #EXTINF:-1 group-title="上海",教育电视台
 http://10.10.10.1:6000/rtp/225.0.0.222:6140
@@ -55,11 +55,11 @@ http://10.10.10.1:6000/rtp/225.0.0.214:6140
 http://10.10.10.1:6000/rtp/225.0.0.229:6140
 #EXTINF:-1 tvg-id="7249" tvg-logo="http://10.10.10.9/assets/tvg-logo/cctv16.png" group-title="央视",CCTV16
 http://10.10.10.1:6000/rtp/225.0.0.180:6140
-#EXTINF:-1 tvg-id="7249" tvg-logo="http://10.10.10.9/assets/tvg-logo/cctv16.png" group-title="4K" group-title="央视",CCTV16-4K
+#EXTINF:-1 tvg-id="7249" tvg-logo="http://10.10.10.9/assets/tvg-logo/cctv16.png" group-title="4K",CCTV16-4K
 http://10.10.10.1:6000/rtp/225.0.0.181:6140
 #EXTINF:-1 tvg-id="17" tvg-logo="http://10.10.10.9/assets/tvg-logo/cctv17.png" group-title="央视",CCTV17
 http://10.10.10.1:6000/rtp/225.0.0.215:6140
-#EXTINF:-1 tvg-logo="http://10.10.10.9/assets/tvg-logo/cctv4k.png" group-title="4K" group-title="央视",CCTV超高清
+#EXTINF:-1 tvg-logo="http://10.10.10.9/assets/tvg-logo/cctv4k.png" group-title="4K",CCTV超高清
 http://10.10.10.1:6000/rtp/225.0.0.244:6140
 #EXTINF:-1 tvg-id="27" tvg-logo="http://10.10.10.9/assets/tvg-logo/湖南卫视.png" group-title="卫视",湖南卫视
 http://10.10.10.1:6000/rtp/225.0.0.55:6140
@@ -163,8 +163,8 @@ http://10.10.10.1:6000/rtp/225.0.0.220:6140
 http://10.10.10.1:6000/rtp/225.0.0.225:6140
 #EXTINF:-1,东方财经
 http://10.10.10.1:6000/rtp/225.0.0.226:6140
-#EXTINF:-1,优购物
+#EXTINF:-1 group-title="电视购物",优购物
 http://10.10.10.1:6000/rtp/225.0.0.234:6140
-#EXTINF:-1,央广购物
+#EXTINF:-1 group-title="电视购物",央广购物
 http://10.10.10.1:6000/rtp/225.0.0.232:6140
 
