@@ -7,16 +7,12 @@ http://10.10.10.6:7088/rtp/225.0.0.1:6140
 http://10.10.10.6:7088/rtp/225.0.0.3:6140
 #EXTINF:-1 tvg-id="1896" tvg-logo="http://10.10.10.9/assets/tvg-logo/dfys.png" group-title="上海",东方影视
 http://10.10.10.6:7088/rtp/225.0.0.5:6140
-#EXTINF:-1 tvg-id="1988" tvg-logo="http://10.10.10.9/assets/tvg-logo/jishirenwen.png" group-title="上海",纪实人文
-http://10.10.10.6:7088/rtp/225.0.0.6:6140
 #EXTINF:-1 tvg-id="1985" tvg-logo="http://10.10.10.9/assets/tvg-logo/dycj.png" group-title="上海",第一财经
 http://10.10.10.6:7088/rtp/225.0.0.7:6140
 #EXTINF:-1 tvg-id="1987" tvg-logo="http://10.10.10.9/assets/tvg-logo/wxty.png" group-title="上海",五星体育
 http://10.10.10.6:7088/rtp/225.0.0.8:6140
 #EXTINF:-1 tvg-id="62" tvg-logo="http://10.10.10.9/assets/tvg-logo/hhxd.png" group-title="上海",哈哈炫动
 http://10.10.10.6:7088/rtp/225.0.0.208:6140
-#EXTINF:-1 tvg-id="1991" tvg-logo="http://10.10.10.9/assets/tvg-logo/shwy.png" group-title="上海",上视外语频道
-http://10.10.10.6:7088/rtp/225.0.0.10:6140
 #EXTINF:-1  group-title="电视购物",东方购物1
 http://10.10.10.6:7088/rtp/225.0.0.11:6140
 #EXTINF:-1  group-title="电视购物",东方购物2
@@ -159,12 +155,8 @@ http://10.10.10.6:7088/rtp/225.0.0.158:6140
 http://10.10.10.6:7088/rtp/225.0.0.159:6140
 #EXTINF:-1,卡酷少儿
 http://10.10.10.6:7088/rtp/225.0.0.220:6140
-#EXTINF:-1,七彩戏剧
-http://10.10.10.6:7088/rtp/225.0.0.225:6140
 #EXTINF:-1,东方财经
 http://10.10.10.6:7088/rtp/225.0.0.226:6140
-#EXTINF:-1 group-title="电视购物",优购物
-http://10.10.10.6:7088/rtp/225.0.0.234:6140
 #EXTINF:-1 group-title="电视购物",央广购物
 http://10.10.10.6:7088/rtp/225.0.0.232:6140
 
