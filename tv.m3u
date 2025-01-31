@@ -56,6 +56,6 @@ http://10.1.1.1:3000/rtp/238.200.200.134:5540
 #EXTINF:-1 tvg-id="29" tvg-logo="http://10.10.10.9/assets/tvg-logo/jiangsu.png" group-title="卫视",江苏卫视
 http://10.1.1.1:3000/rtp/238.200.200.135:5540
 #EXTINF:-1 tvg-id="30" tvg-logo="http://10.10.10.9/assets/tvg-logo/beijing1.png" group-title="卫视",北京卫视
-http://10.1.1.1:3000/rtp/238.200.200.173:5540
+http://10.1.1.1:3000/rtp/238.200.200.137:5540
 #EXTINF:-1 group-title="4K",欢笑剧场
-http://10.1.1.1:3000/rtp/238.200.200.245:5540
+http://10.1.1.1:3000/rtp/238.200.200.228:5540
