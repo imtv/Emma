@@ -1,1 +1,13 @@
-
+||id.maxon.net^
+||my.maxon.net^
+||ru.maxon.net^
+||shop.maxon.net^
+||developers.maxon.net^
+||dev.student.maxon.net^
+||labs.maxon.net^
+||capsules.maxon.net^
+||cineversity.maxon.net^
+||jlcustomers.maxon.net^
+||redgiant.com^
+||maxon.net^
+||maxon.org^
